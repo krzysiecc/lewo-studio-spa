@@ -1,0 +1,24 @@
+/* Copyright (c) 2025, Krzysztof Wiłnicki
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. */
+
+
+@import "tailwindcss";
+
+@theme {
+  --color-seashell: #FDF2EA;
+  --color-thulian: #D483A7;
+  --color-coffee: #6C4D3F;
+  --color-bluepowder: #97BBDC;
+  --color-avocado: #5B6F05;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-black font-sans;
+}

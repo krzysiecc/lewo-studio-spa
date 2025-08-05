@@ -1,10 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+// Copyright (c) 2025, Krzysztof Wiłnicki
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+// src/main.tsx
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './styles/index.css'
+import App from './App'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>
 )
