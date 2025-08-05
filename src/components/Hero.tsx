@@ -27,7 +27,7 @@ export default function Hero() {
         ref={nameRef}
         className="text-7xl md:text-9xl font-extrabold tracking-tight text-thulian text-center"
       >
-        Lena Wojewódzka
+        Lena Wojewódzka alfa
       </h1>
     </section>
   )
