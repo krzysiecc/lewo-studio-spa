@@ -1,24 +1,122 @@
-/* Copyright (c) 2025, Krzysztof Wiłnicki
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. */
+/* styles/index.css */
 
+/* Copyright (c) 2025, Krzysztof Wiłnicki
+* All rights reserved.
+*
+* This source code is licensed under the BSD-style license found in the
+* LICENSE file in the root directory of this source tree. */
+
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=DM+Serif+Display:ital@0;1&display=swap");
 
 @import "tailwindcss";
 
 @theme {
-  --color-seashell: #FDF2EA;
-  --color-thulian: #D483A7;
-  --color-coffee: #6C4D3F;
-  --color-bluepowder: #97BBDC;
-  --color-avocado: #5B6F05;
+  /* Seashell (light neutral) */
+  --color-seashell-50: #fef9f4;
+  --color-seashell-100: #fdf2ea;
+  --color-seashell-200: #fae5d6;
+  --color-seashell-300: #f7d8c2;
+  --color-seashell-400: #f2cbad;
+  --color-seashell-500: #eeae8d;
+  --color-seashell-600: #db9471;
+  --color-seashell-700: #c47c5e;
+  --color-seashell-800: #a5664d;
+  --color-seashell-900: #88523f;
+
+  /* Thulian (pinkish) */
+  --color-thulian-50: #fbeef4;
+  --color-thulian-100: #f7d6e3;
+  --color-thulian-200: #f2b0c6;
+  --color-thulian-300: #ec8aa9;
+  --color-thulian-400: #e2608d;
+  --color-thulian-500: #d83d74;
+  --color-thulian-600: #be2e64;
+  --color-thulian-700: #a02052;
+  --color-thulian-800: #841841;
+  --color-thulian-900: #6a1034;
+
+  /* Coffee (brown) */
+  --color-coffee-50: #f2eae6;
+  --color-coffee-100: #ddcfc9;
+  --color-coffee-200: #c5b3a9;
+  --color-coffee-300: #ac9588;
+  --color-coffee-400: #937665;
+  --color-coffee-500: #7a5e4d;
+  --color-coffee-600: #624b3c;
+  --color-coffee-700: #4c392e;
+  --color-coffee-800: #37291f;
+  --color-coffee-900: #281d15;
+
+  /* Bluepowder */
+  --color-bluepowder-50: #f1f7fb;
+  --color-bluepowder-100: #dcebeb;
+  --color-bluepowder-200: #c5dcec;
+  --color-bluepowder-300: #adcade;
+  --color-bluepowder-400: #96b4d2;
+  --color-bluepowder-500: #7c9fc3;
+  --color-bluepowder-600: #6085b0;
+  --color-bluepowder-700: #48698d;
+  --color-bluepowder-800: #37526c;
+  --color-bluepowder-900: #283b4f;
+
+  /* Avocado (olive green) */
+  --color-avocado-50: #f6f8ec;
+  --color-avocado-100: #e4edcb;
+  --color-avocado-200: #d0e3aa;
+  --color-avocado-300: #bbda89;
+  --color-avocado-400: #a2cf64;
+  --color-avocado-500: #89b83e;
+  --color-avocado-600: #709731;
+  --color-avocado-700: #5d7a28;
+  --color-avocado-800: #495d1f;
+  --color-avocado-900: #374616;
+
+  --font-antonio: "Antonio", "sans-serif";
+  --font-DM: "DM Serif Display", serif;
+}
+
+@layer utilities {
+  .layout-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .layout-grid {
+      gap: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 90%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .layout-grid {
+      max-width: 80%;
+      padding-left: 3rem;
+      padding-right: 3rem;
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .layout-grid {
+      max-width: 65%;
+    }
+  }
 }
 
 :root {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  overflow: hidden;
 }
 
 body {
-  @apply bg-white text-black font-sans;
+  @apply bg-seashell-50 text-coffee-900 font-sans;
 }
