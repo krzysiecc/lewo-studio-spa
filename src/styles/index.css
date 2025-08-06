@@ -92,13 +92,13 @@
       gap: 1.5rem;
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 90%;
+      max-width: 95%;
     }
   }
 
   @media (min-width: 1024px) {
     .layout-grid {
-      max-width: 80%;
+      max-width: 90%;
       padding-left: 3rem;
       padding-right: 3rem;
       gap: 2rem;
@@ -107,7 +107,7 @@
 
   @media (min-width: 1440px) {
     .layout-grid {
-      max-width: 65%;
+      max-width: 85%;
     }
   }
 }
@@ -119,4 +119,15 @@
 
 body {
   @apply bg-seashell-50 text-coffee-900 font-sans;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

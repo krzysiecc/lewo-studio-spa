@@ -28,7 +28,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-seashell-200 text-coffee-800 px-4 py-10 flex flex-col justify-between">
+    <section className="relative min-h-screen bg-coffee-800 text-seashell-200 px-4 py-10 flex flex-col justify-between">
       <div className="layout-grid grid-cols-12 gap-4">
         <div className="col-span-12 h-[10rem]"></div>
 
