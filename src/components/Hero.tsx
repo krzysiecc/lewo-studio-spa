@@ -11,7 +11,7 @@ import gsap from "gsap";
 
 export default function Hero() {
   const bigNameRef = useRef<HTMLHeadingElement>(null);
-  const smallNameRef = useRef<HTMLHeadingElement>(null);
+  const smallNameRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     gsap.fromTo(
@@ -28,9 +28,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-seashell-200 text-coffee-800 px-4 py-10 flex flex-row justify-center">
-      <div className="layout-grid grid-cols-12 gap-4 flex-grow">
-        {/* Centered Name Block */}
+    <section className="relative min-h-screen bg-seashell-200 text-coffee-800 px-4 py-10 flex flex-col justify-between">
+      <div className="layout-grid grid-cols-12 gap-4">
+        <div className="col-span-12 h-[10rem]"></div>
+
+        {/* Name Block */}
         <div className="col-span-12 md:col-start-2 md:col-span-10 flex flex-col justify-center items-start z-10 font-antonio space-y-1">
           <div ref={bigNameRef}>
             <h1
@@ -46,7 +48,6 @@ export default function Hero() {
             </h1>
           </div>
 
-          {/* interior design label */}
           <span
             ref={smallNameRef}
             className="text-lg font-light tracking-wider text-right w-full text-coffee-500"
@@ -55,20 +56,13 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Right-side block */}
-        <div className="hidden md:flex flex-col col-start-8 col-span-3 space-y-2 text-sm leading-relaxed z-10 text-right pt-24">
-          <p className="text-coffee-800">
-            ...siema siema kurwa witam Lorem ipsum dolor sit, amet consectetur
-            adipisicing elit. Nobis, dolor illo quis qui earum beatae at tenetur
-            unde! Animi, delectus quisquam culpa minus tenetur sint ea, quos ex
-            velit ipsa dolorum voluptatibus sapiente perspiciatis fugit
-            obcaecati officiis eaque tempore provident, ullam vitae. Fugiat rem
-            explicabo numquam temporibus similique, reiciendis esse?
-          </p>
+        {/* IMAGE CAROUSEL */}
+        <div className="col-span-12 mt-10 justify-center text-center">
+          mimimi
         </div>
       </div>
 
-      {/* Footer Scroll Hint */}
+      {/* Scroll Down Hint */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20">
         <p className="opacity-60 text-xs tracking-wide">scroll down</p>
       </div>

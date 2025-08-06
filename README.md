@@ -6,19 +6,17 @@
 ![Three.js](https://img.shields.io/badge/Three.js-3D-000000?logo=three.js&logoColor=white) ![Lenis](https://img.shields.io/badge/Lenis-Smooth%20Scroll-FFC300)
 
 ![Most Used Language: JavaScript](https://img.shields.io/badge/Most%20Used%20Language-JavaScript-F7DF1E?logo=javascript&logoColor=black)
-lenawojewodzka-portfolio-fe
 
 # Project Brief
 
 ## Color Palette
 
-|           |                                                                    |     |
 | :-------: | :----------------------------------------------------------------: | :-: |
-| `#D483A7` |  ![#D483A7](https://placehold.co/100x40/D483A7/FFF?text=Thulian)   |     |
-| `#FDF2EA` |  ![#FDF2EA](https://placehold.co/100x40/FDF2EA/000?text=Seashell)  |     |
-| `#6C4D3F` |   ![#6C4D3F](https://placehold.co/100x40/6C4D3F/FFF?text=Coffee)   |     |
-| `#97BBDC` | ![#97BBDC](https://placehold.co/100x40/97BBDC/FFF?text=PowderBlue) |     |
-| `#5B6F05` |  ![#5B6F05](https://placehold.co/100x40/5B6F05/FFF?text=Avocado)   |     |
+| `#D483A7` | ![#D483A7](https://placehold.co/100x40/D483A7/FFF?text=Thulian) | |
+| `#FDF2EA` | ![#FDF2EA](https://placehold.co/100x40/FDF2EA/000?text=Seashell) | |
+| `#6C4D3F` | ![#6C4D3F](https://placehold.co/100x40/6C4D3F/FFF?text=Coffee) | |
+| `#97BBDC` | ![#97BBDC](https://placehold.co/100x40/97BBDC/FFF?text=PowderBlue) | |
+| `#5B6F05` | ![#5B6F05](https://placehold.co/100x40/5B6F05/FFF?text=Avocado) | |
 
 ## Overview
 

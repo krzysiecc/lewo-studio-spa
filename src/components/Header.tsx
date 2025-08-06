@@ -45,13 +45,13 @@ export default function Header() {
         >
           <div className="flex flex-col justify-between w-full h-full">
             {/* Line 1 */}
-            <span className="block h-[2px] w-full bg-coffee-900 rounded transform transition-all duration-200 group-hover:w-[200%] group-hover:-translate-x-4.5 group-hover:h-0.75" />
+            <span className="block h-[2px] w-full bg-coffee-900 rounded transform transition-all duration-1200 group-hover:w-[200%] group-hover:-translate-x-3.5 group-hover:h-0.75" />
 
             {/* Line 2 */}
-            <span className="block h-[2px] w-full bg-coffee-900 rounded transform transition-all duration-800 group-hover:w-[200%] group-hover:-translate-x-4.5 group-hover:h-0.75" />
+            <span className="block h-[2px] w-full bg-coffee-900 rounded transform transition-all duration-200 group-hover:w-[200%] group-hover:-translate-x-3.5 group-hover:h-0.75" />
 
             {/* Line 3 */}
-            <span className="block h-[2px] w-full bg-coffee-900 rounded transform transition-all duration-1200 group-hover:w-[200%] group-hover:-translate-x-4.5 group-hover:h-0.75" />
+            <span className="block h-[2px] w-full bg-coffee-900 rounded transform transition-all duration-700 group-hover:w-[200%] group-hover:-translate-x-3.5 group-hover:h-0.75" />
           </div>
         </button>
       </div>
