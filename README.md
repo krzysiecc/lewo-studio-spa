@@ -11,12 +11,13 @@
 
 ## Color Palette
 
+|           |                                                                    |     |
 | :-------: | :----------------------------------------------------------------: | :-: |
-| `#D483A7` | ![#D483A7](https://placehold.co/100x40/D483A7/FFF?text=Thulian) | |
-| `#FDF2EA` | ![#FDF2EA](https://placehold.co/100x40/FDF2EA/000?text=Seashell) | |
-| `#6C4D3F` | ![#6C4D3F](https://placehold.co/100x40/6C4D3F/FFF?text=Coffee) | |
-| `#97BBDC` | ![#97BBDC](https://placehold.co/100x40/97BBDC/FFF?text=PowderBlue) | |
-| `#5B6F05` | ![#5B6F05](https://placehold.co/100x40/5B6F05/FFF?text=Avocado) | |
+| `#D483A7` |  ![#D483A7](https://placehold.co/100x40/D483A7/FFF?text=Thulian)   |     |
+| `#FDF2EA` |  ![#FDF2EA](https://placehold.co/100x40/FDF2EA/000?text=Seashell)  |     |
+| `#6C4D3F` |   ![#6C4D3F](https://placehold.co/100x40/6C4D3F/FFF?text=Coffee)   |     |
+| `#97BBDC` | ![#97BBDC](https://placehold.co/100x40/97BBDC/FFF?text=PowderBlue) |     |
+| `#5B6F05` |  ![#5B6F05](https://placehold.co/100x40/5B6F05/FFF?text=Avocado)   |     |
 
 ## Overview
 
