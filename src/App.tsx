@@ -6,10 +6,12 @@
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
+import Overlay from "./components/Overlay";
 import Hero from "./components/Hero";
-import Header from "./components/Header";
+
 import RevealProject from "./components/RevealProject";
 import MainProjects from "./components/MainProject";
+
 import { useLenis } from "./hooks/useLenis";
 
 export default function App() {
@@ -17,7 +19,8 @@ export default function App() {
 
   return (
     <main>
-      <Header />
+      <Overlay />
+
       <Hero />
 
       <RevealProject />
