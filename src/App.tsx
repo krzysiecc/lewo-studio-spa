@@ -6,26 +6,24 @@
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
-import Overlay from "./components/Overlay";
+import Layout from "./components/Layout";
 import Hero from "./components/Hero";
-
 import RevealProject from "./components/RevealProject";
 import MainProjects from "./components/MainProject";
-
-import { useLenis } from "./hooks/useLenis";
+import { LenisProvider } from "./context/lenisContext";
 
 export default function App() {
-  useLenis();
-
   return (
-    <main>
-      <Overlay />
+    <LenisProvider>
+      <main>
+        <Layout>
+          <Hero />
 
-      <Hero />
+          <RevealProject />
 
-      <RevealProject />
-
-      <MainProjects />
-    </main>
+          <MainProjects />
+        </Layout>
+      </main>
+    </LenisProvider>
   );
 }

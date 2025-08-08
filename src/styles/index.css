@@ -80,7 +80,7 @@
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1rem;
-    width: 100%;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
@@ -92,31 +92,55 @@
       gap: 1.5rem;
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 95%;
+      max-width: 85%;
     }
   }
 
-  @media (min-width: 1024px) {
+  /* @media (min-width: 1024px) {
     .layout-grid {
-      max-width: 90%;
+      max-width: 85%;
       padding-left: 3rem;
       padding-right: 3rem;
       gap: 2rem;
     }
-  }
+  } */
 
   @media (min-width: 1440px) {
     .layout-grid {
-      max-width: 85%;
+      max-width: 80%;
     }
   }
 }
 
-:root {
-  scroll-behavior: auto;
+body {
+  @apply bg-seashell-100 text-coffee-900 font-sans;
   overflow: hidden;
 }
 
-body {
-  @apply bg-seashell-50 text-coffee-900 font-sans;
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in-from-top {
+  animation: slide-in-from-top 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
 }

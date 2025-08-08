@@ -15,39 +15,60 @@ gsap.registerPlugin(ScrollTrigger);
 export default function RevealProject() {
   const containerRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<SVGSVGElement>(null);
-  const nextRef = useRef<HTMLDivElement>(null);
+  const textTopRef = useRef<HTMLHeadingElement>(null);
+  const textBottomRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !circleRef.current || !nextRef.current) return;
+    if (
+      !containerRef.current ||
+      !circleRef.current ||
+      !textTopRef.current ||
+      !textBottomRef.current
+    )
+      return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=100%",
+          end: "+=200%",
           scrub: true,
           pin: true,
           anticipatePin: 1,
         },
       });
 
-      // Animate circle and next section in parallel
       tl.to(
         circleRef.current,
         {
-          scale: 60,
-          transformOrigin: "50% 50%",
+          scale: 20,
           ease: "none",
         },
         0
-      ); // start immediately
+      );
 
       tl.fromTo(
-        nextRef.current,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, ease: "power2.out" },
-        0.2 // starts slightly after
+        textTopRef.current,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", ease: "power2.inOut" },
+        0.2
+      );
+
+      tl.fromTo(
+        textBottomRef.current,
+        { opacity: 0 },
+        { opacity: 1, ease: "power2.in" },
+        0.6
+      );
+
+      tl.to(
+        [textTopRef.current, textBottomRef.current],
+        {
+          opacity: 0,
+          ease: "none",
+        },
+        1.2
       );
     }, containerRef);
 
@@ -56,32 +77,37 @@ export default function RevealProject() {
 
   return (
     <>
-      {/* Reveal Transition Section */}
       <section
         ref={containerRef}
         className="relative min-h-screen flex items-center justify-center bg-seashell-100 overflow-hidden"
       >
-        {/* SVG Circle */}
+        {/* SVG Circle that grows */}
         <svg
           ref={circleRef}
-          className="absolute w-[100px] h-[100px] z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute w-[10rem] h-[10rem] z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           viewBox="0 0 100 100"
           preserveAspectRatio="xMidYMid meet"
-          style={{
-            transform: "scale(1)",
-            willChange: "transform",
-          }}
+          style={{ transform: "scale(1)", willChange: "transform" }}
         >
-          <circle cx="50" cy="50" r="50" fill="#6c4d3f" />
+          <circle cx="50" cy="50" r="50" className="fill-coffee-900/95" />
         </svg>
-      </section>
 
-      {/* Next Section (projects intro?) */}
-      <section
-        ref={nextRef}
-        className="min-h-screen bg-coffee-900 text-seashell-100 flex items-center justify-center text-4xl font-bold"
-      >
-        This is the Projects section.
+        {/* Text that appears ON TOP of the circle */}
+        <div className="absolute z-20 text-center text-seashell-100 pointer-events-none">
+          <h2
+            ref={textTopRef}
+            className="text-4xl md:text-6xl font-extrabold"
+            style={{ clipPath: "inset(0 100% 0 0)" }} // Initial state for animation
+          >
+            Exploring the Projects
+          </h2>
+          <p
+            ref={textBottomRef}
+            className="text-lg mt-4 opacity-0" // Initial state for animation
+          >
+            A journey through curated spaces.
+          </p>
+        </div>
       </section>
     </>
   );
