@@ -89,7 +89,7 @@ export default function RevealProject() {
           preserveAspectRatio="xMidYMid meet"
           style={{ transform: "scale(1)", willChange: "transform" }}
         >
-          <circle cx="50" cy="50" r="50" className="fill-coffee-900/95" />
+          <circle cx="50" cy="50" r="50" className="fill-thulian-300/95" />
         </svg>
 
         {/* Text that appears ON TOP of the circle */}

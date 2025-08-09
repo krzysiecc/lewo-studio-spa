@@ -8,6 +8,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=DM+Serif+Display:ital@0;1&display=swap");
 
+/* monospace */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
 @import "tailwindcss";
 
 @theme {
@@ -87,6 +90,29 @@
     padding-right: 1rem;
   }
 
+  .bg-pattern-colorable {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M11 0l5 20H6l5-20zm42 31a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM0 72h40v4H0v-4zm0-8h31v4H0v-4zm20-16h20v4H20v-4zM0 56h40v4H0v-4zm63-25a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM53 41a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-30 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-28-8a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zM56 5a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zm-3 46a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM21 0l5 20H16l5-20zm43 64v-4h-4v4h-4v4h4v4h4v-4h4v-4h-4zM36 13h4v4h-4v-4zm4 4h4v4h-4v-4zm-4 4h4v4h-4v-4zm8-8h4v4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .drop-shadow-glow {
+    --tw-drop-shadow: drop-shadow(0 0 25px currentColor);
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+
+  .text-glow {
+    /* We layer multiple shadows to create a soft, neon-like bloom */
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 20px currentColor;
+  }
+
+  .no-transition {
+    transition: none !important;
+  }
+
   @media (min-width: 768px) {
     .layout-grid {
       gap: 1.5rem;
@@ -143,4 +169,55 @@ body {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.5s ease-out forwards;
+}
+
+curtain-block-styled {
+  /* A very dark, almost black color with a hint of blue, and semi-transparent. */
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 40, 50, 0.95),
+    /* A slightly lighter top edge to catch light */ rgba(10, 15, 20, 0.9)
+      /* The main dark body */
+  );
+
+  /* The distortion can be kept for a moody, wavering effect */
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- 2. THE GRAIN EFFECT --- */
+/* We use a pseudo-element with a repeating noise pattern */
+.curtain-block-styled::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  animation: grain-pan 3s steps(10) infinite;
+}
+
+/* Keyframes for the grain animation (makes it move) */
+@keyframes grain-pan {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  30% {
+    transform: translate(3%, -6%);
+  }
+  50% {
+    transform: translate(8%, 9%);
+  }
+  70% {
+    transform: translate(-2%, 4%);
+  }
+  90% {
+    transform: translate(1%, -3%);
+  }
 }

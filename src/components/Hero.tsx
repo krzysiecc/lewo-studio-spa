@@ -57,10 +57,10 @@ export default function Hero() {
                     lineHeight: 1.0,
                   }}
                 >
-                  <span className="text-thulian-700">lena</span>
+                  <span className="text-thulian-700 uppercase">lena</span>
                   <br />
-                  <span className="text-thulian-700">wojewódz</span>
-                  <span className="text-thulian-300">ka</span>
+                  <span className="text-thulian-700 uppercase">wojewódz</span>
+                  <span className="text-thulian-300 uppercase">ka</span>
                 </h1>
               </div>
 
