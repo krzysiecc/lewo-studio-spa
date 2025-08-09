@@ -1,4 +1,4 @@
-// src/App.tsx
+// App.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.

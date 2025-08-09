@@ -15,7 +15,7 @@ export default function Chatbot({ isMenuOpen }: { isMenuOpen: boolean }) {
     <>
       <div
         className={`
-          fixed bottom-8 left-8 z-40 pointer-events-auto
+          fixed bottom-8 right-8 z-40 pointer-events-auto
           transition-all duration-500 ease-in-out
           ${
             isMenuOpen
@@ -27,9 +27,7 @@ export default function Chatbot({ isMenuOpen }: { isMenuOpen: boolean }) {
         <button
           onClick={() => setIsChatOpen(true)}
           className="w-16 h-16 bg-avocado-200 rounded-full flex items-center justify-center shadow-lg animate-breathing-glow"
-        >
-          icon
-        </button>
+        ></button>
       </div>
       {isChatOpen && <ChatbotWindow onClose={() => setIsChatOpen(false)} />}
     </>

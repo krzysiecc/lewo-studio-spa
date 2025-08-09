@@ -1,3 +1,5 @@
+// vite-env.d.ts
+
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.
 //

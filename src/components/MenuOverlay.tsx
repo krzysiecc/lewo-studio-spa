@@ -1,4 +1,4 @@
-// components/LayoutComponents/MenuOverlay.tsx
+// components/MenuOverlay.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.
@@ -243,9 +243,9 @@ const MenuOverlayRender: ForwardRefRenderFunction<
       {/* LAYER 2: Visual FX (no pointer!) */}
       <MenuBackground
         defaultCloudColor={defaultHexColor}
-        cloudScale={0.5}
+        cloudScale={2.0}
         cloudSpeed={0.05}
-        cloudContrast={2.5}
+        cloudContrast={1.5}
       />
 
       {/* LAYER 3: Interactive content on top */}

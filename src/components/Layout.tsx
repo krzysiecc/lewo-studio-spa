@@ -22,7 +22,6 @@ export default function Layout({ children }: LayoutProps) {
       {/* Header floats on top */}
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
-      {/* 👇 3. Pass the state down to the Chatbot */}
       <Chatbot isMenuOpen={isMenuOpen} />
 
       {/* The main content area has padding, creating the "frame" */}

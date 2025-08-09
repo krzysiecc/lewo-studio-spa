@@ -1,3 +1,11 @@
+// components/FX/ShadowyClouds.tsx
+
+// Copyright (c) 2025, Krzysztof Wiłnicki
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+
 import { useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -122,7 +130,7 @@ export default function ShadowyClouds({
         fragmentShader={cloudFragmentShader}
         uniforms={{
           uTime: { value: 0 },
-          uOpacity: { value: 0 },
+          uOpacity: { value: 0.15 },
           uColor: { value: new THREE.Color("#281d15") },
           // 👇 Pass the props into the shader
           uScale: { value: scale },
