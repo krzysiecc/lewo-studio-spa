@@ -18,12 +18,12 @@ export default function MixerButton({ isOpen, onClick }: MixerButtonProps) {
       onClick={onClick}
       className="relative z-50 flex items-center justify-center w-20 h-20 text-coffee-900/80 group"
     >
-      <div className="relative w-8 h-8 flex justify-between">
+      <div className="relative w-8 md:w-12 h-10 md:h-16 flex justify-between">
         {/* Left Line */}
-        <div className="relative w-[2px] h-full bg-current">
+        <div className="relative w-[4px] md:w-[6px] h-full bg-current">
           <span
             className={`
-              absolute left-1/2 block w-2 h-2 -translate-x-1/2 rounded-full border-2 border-current bg-coffee-900
+              absolute left-1/2 block w-2 md:w-3 h-2 md:h-4 -translate-x-1/2 rounded-full border-2 border-current bg-coffee-900
               transition-all duration-500 ease-in-out
               ${isOpen ? "top-1/4" : "top-3/4 group-hover:top-1/2"}
             `}
@@ -31,13 +31,13 @@ export default function MixerButton({ isOpen, onClick }: MixerButtonProps) {
         </div>
 
         {/* Middle Line */}
-        <div className="relative w-[2px] h-full bg-current/50"></div>
+        <div className="relative w-[4px] md:w-[6px] h-full bg-current/50"></div>
 
         {/* Right Line */}
-        <div className="relative w-[2px] h-full bg-current">
+        <div className="relative w-[4px] md:w-[6px] h-full bg-current">
           <span
             className={`
-              absolute left-1/2 block w-2 h-2 -translate-x-1/2 rounded-full border-2 border-current bg-coffee-900
+              absolute left-1/2 block w-2 md:w-3 h-2 md:h-4 -translate-x-1/2 rounded-full border-2 border-current bg-coffee-900
               transition-all duration-500 ease-in-out
               ${isOpen ? "top-3/4" : "top-1/4 group-hover:top-1/2"}
             `}

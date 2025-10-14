@@ -10,6 +10,9 @@ import { useRef, useEffect } from "react";
 import MenuOverlay, { type MenuOverlayRef } from "../MenuOverlay";
 import MixerButton from "./MixerButton";
 import LogoMain from "../Logos/LogoMain";
+import LogoMainSecure from "../Logos/LogoMainSecure";
+import LanguageSwitcher from "./LanguageSwitcher";
+
 import gsap from "gsap";
 
 type HeaderProps = {
@@ -76,10 +79,14 @@ export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
       <header className="fixed top-0 right-0 w-full z-50 p-4 md:p-6 flex justify-between items-center">
         <LogoMain
           ref={logoRef}
-          className="ml-2 w-20 h-auto text-coffee-900 pointer-events-auto transition-all ease-in-out"
+          className="ml-2 w-15 md:w-25 h-auto text-coffee-900 pointer-events-auto transition-all ease-in-out"
         />
 
-        <div ref={buttonWrapperRef}>
+        <div
+          ref={buttonWrapperRef}
+          className="flex items-center gap-1 md:gap-4"
+        >
+          <LanguageSwitcher />
           <MixerButton isOpen={isMenuOpen} onClick={handleButtonClick} />
         </div>
       </header>

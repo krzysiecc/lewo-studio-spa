@@ -87,7 +87,7 @@ type ShadowyCloudsProps = {
 
 export default function ShadowyClouds({
   bridge,
-  defaultColor, // Receive the default color as a prop
+  defaultColor,
   scale = 0.6,
   speed = 0.02,
   contrast = 2.5,
@@ -95,25 +95,57 @@ export default function ShadowyClouds({
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   useEffect(() => {
-    // This component now updates itself by listening to the bridge
+    // The self-initializing animation is PERFECT.
+    if (!materialRef.current) return;
+    gsap.to(materialRef.current.uniforms.uOpacity, {
+      value: 0.15,
+      duration: 1.2,
+      delay: 0.5,
+      ease: "power2.out",
+    });
+
+    // The bridge listener is where we make the final fix.
     bridge.update = (isHovered, color) => {
       if (!materialRef.current) return;
 
-      gsap.to(materialRef.current.uniforms.uOpacity, {
-        value: isHovered ? 0.4 : 0.1,
-        duration: 1.0,
-        ease: "power2.inOut",
-      });
+      // --- 👇 THIS IS THE DEFINITIVE FIX ---
+      // Immediately kill any active animations on these specific properties
+      // before starting new ones. This prevents all race conditions.
+      gsap.killTweensOf(materialRef.current.uniforms.uOpacity);
+      gsap.killTweensOf(materialRef.current.uniforms.uColor.value);
 
-      gsap.to(materialRef.current.uniforms.uColor.value, {
-        r: new THREE.Color(color).r,
-        g: new THREE.Color(color).g,
-        b: new THREE.Color(color).b,
-        duration: 0.7,
-        ease: "power2.out",
-      });
+      // Now, we can safely create the new animations.
+      // If hovered, animate in.
+      if (isHovered) {
+        gsap.to(materialRef.current.uniforms.uOpacity, {
+          value: 0.4,
+          duration: 1.0,
+          ease: "power2.inOut",
+        });
+        gsap.to(materialRef.current.uniforms.uColor.value, {
+          r: new THREE.Color(color).r,
+          g: new THREE.Color(color).g,
+          b: new THREE.Color(color).b,
+          duration: 0.7,
+          ease: "power2.out",
+        });
+      } else {
+        // If NOT hovered, animate out quickly.
+        gsap.to(materialRef.current.uniforms.uOpacity, {
+          value: 0.15,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        gsap.to(materialRef.current.uniforms.uColor.value, {
+          r: new THREE.Color(color).r, // `color` will be the defaultHexColor
+          g: new THREE.Color(color).g,
+          b: new THREE.Color(color).b,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
     };
-  }, [bridge]); // Run this once to set up the listener
+  }, [bridge, defaultColor]);
 
   useFrame((state) => {
     if (materialRef.current) {
@@ -130,9 +162,8 @@ export default function ShadowyClouds({
         fragmentShader={cloudFragmentShader}
         uniforms={{
           uTime: { value: 0 },
-          uOpacity: { value: 0.15 },
-          uColor: { value: new THREE.Color("#281d15") },
-          // 👇 Pass the props into the shader
+          uOpacity: { value: 0 },
+          uColor: { value: new THREE.Color(defaultColor) },
           uScale: { value: scale },
           uSpeed: { value: speed },
           uContrast: { value: contrast },

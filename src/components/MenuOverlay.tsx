@@ -13,11 +13,15 @@ import {
   forwardRef,
   useImperativeHandle,
   type ForwardRefRenderFunction,
+  useMemo,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSharedLenis } from "../context/LenisContext";
 import gsap from "gsap";
 import { MenuBackground, fxBridge } from "./FX/MenuBackground";
+
+import { Trans, useTranslation } from "react-i18next";
+import AnimatedText from "./FX/AnimatedText";
 
 // ============================================================================
 // Configuration
@@ -38,41 +42,6 @@ function shuffleArray(array: any[]) {
   }
   return array;
 }
-
-const menuItems = [
-  {
-    label: "Projects",
-    path: "/",
-    colorClass: "text-thulian-400",
-    glowClass: "glow-thulian",
-    image: "/unsplash2.jpg",
-    description: "a curated collection of elegant, functional living spaces",
-  },
-  {
-    label: "About",
-    path: "/about",
-    colorClass: "text-avocado-400",
-    glowClass: "glow-avocado",
-    image: "/unsplash1.jpg",
-    description: "driven by a passion for form, function, and personality",
-  },
-  {
-    label: "Studio",
-    path: "/studio",
-    colorClass: "text-bluepowder-400",
-    glowClass: "glow-bluepowder",
-    image: "/unsplash3.jpg",
-    description: "where ideas take shape and visions become reality",
-  },
-  {
-    label: "Contact",
-    path: "/contact",
-    colorClass: "text-seashell-500",
-    glowClass: "glow-seashell",
-    isMap: true,
-    description: "located in the heart of the creative district",
-  },
-];
 
 const GOOGLE_MAPS_EMBED_URL =
   "https://maps.google.com/maps?width=720&amp;height=720&amp;hl=en&amp;q=Horbaczewskiego%2045,%20Wroc%C5%82aw+(Lena%20Wojew%C3%B3dzka%20Design%20Studio)&amp;t=h&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed";
@@ -100,6 +69,47 @@ const MenuOverlayRender: ForwardRefRenderFunction<
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const previewContainerRef = useRef<HTMLDivElement>(null);
 
+  const { t } = useTranslation();
+
+  const menuItems = useMemo(
+    () => [
+      {
+        label: t("overlaymenu.projects"),
+        path: "/",
+        colorClass: "text-thulian-400",
+        glowClass: "glow-thulian",
+        image: "/unsplash2.jpg",
+        description:
+          "a curated collection of elegant, functional living spaces",
+      },
+      {
+        label: t("overlaymenu.about"),
+        path: "/about",
+        colorClass: "text-avocado-400",
+        glowClass: "glow-avocado",
+        image: "/unsplash1.jpg",
+        description: "driven by a passion for form, function, and personality",
+      },
+      {
+        label: t("overlaymenu.studio"),
+        path: "/studio",
+        colorClass: "text-bluepowder-400",
+        glowClass: "glow-bluepowder",
+        image: "/unsplash3.jpg",
+        description: "where ideas take shape and visions become reality",
+      },
+      {
+        label: t("overlaymenu.contact"),
+        path: "/contact",
+        colorClass: "text-seashell-500",
+        glowClass: "glow-seashell",
+        isMap: true,
+        description: "located in the heart of the creative district",
+      },
+    ],
+    [t]
+  );
+
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = activeIndex !== null ? menuItems[activeIndex] : null;
   const activeHexColor = activeItem
@@ -109,7 +119,6 @@ const MenuOverlayRender: ForwardRefRenderFunction<
   // --- EFFECTS ---
 
   useEffect(() => {
-    // When the active color changes, send the new state to the bridge
     fxBridge.update(activeIndex !== null, activeHexColor);
   }, [activeIndex, activeHexColor]);
 
@@ -236,7 +245,7 @@ const MenuOverlayRender: ForwardRefRenderFunction<
       <button
         type="button"
         aria-label="Close menu"
-        className="absolute inset-0 z-10 bg-black/97"
+        className="absolute inset-0 z-10 bg-black/99"
         onClick={handleClose}
       />
 
@@ -244,15 +253,18 @@ const MenuOverlayRender: ForwardRefRenderFunction<
       <MenuBackground
         defaultCloudColor={defaultHexColor}
         cloudScale={2.0}
-        cloudSpeed={0.05}
-        cloudContrast={1.5}
+        cloudSpeed={0.03}
+        cloudContrast={2.5}
       />
 
       {/* LAYER 3: Interactive content on top */}
       <div className="absolute inset-0 z-30 flex items-center justify-center">
         <div className="layout-grid w-full">
           {/* LEFT: Preview */}
-          <div ref={previewContainerRef} className="col-span-6 opacity-0">
+          <div
+            ref={previewContainerRef}
+            className="col-span-6 col-start-1 opacity-0"
+          >
             {activeItem && (
               <div key={activeItem.label} className="text-seashell-100">
                 {activeItem.isMap ? (
@@ -282,15 +294,16 @@ const MenuOverlayRender: ForwardRefRenderFunction<
           </div>
 
           {/* RIGHT: Nav */}
-          <div className="col-start-8 col-span-5 flex items-center justify-start">
-            <nav className="relative flex flex-col items-start gap-4">
+          <div className="col-span-6 col-start-8 flex items-center justify-end">
+            <nav className="relative flex flex-col items-end gap-4">
               {menuItems.map((item, index) => (
                 <button
                   key={item.path}
                   className={`
               nav-link cursor-pointer
-              font-antonio text-5xl md:text-7xl lowercase
-              transition-colors duration-300 text-glow text-left
+              font-antonio text-5xl/[1.5] md:text-7xl/[1.5] lowercase
+              transition-colors duration-300 text-glow text-right
+			tracking-widest
               ${item.colorClass}
             `}
                   onMouseEnter={() => setActiveIndex(index)}
@@ -300,8 +313,13 @@ const MenuOverlayRender: ForwardRefRenderFunction<
                     handleNavigate(item.path);
                   }}
                 >
-                  <span className="font-bold">{item.label.charAt(0)}</span>
-                  <span className="font-extralight">{item.label.slice(1)}</span>
+                  <AnimatedText
+                    el="span"
+                    className="font-bold"
+                    text={item.label}
+                  >
+                    <Trans i18nKey={item.label} />
+                  </AnimatedText>
                 </button>
               ))}
             </nav>

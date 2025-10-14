@@ -52,7 +52,7 @@ const fragmentShader = `
     // --- 4. Extreme Contrast for the "Points" look ---
     // This is the most crucial step. A very high power exponent crushes
     // almost all values to pure black, leaving only the brightest specks.
-    float finalNoise = pow(combinedNoise, 20.0);
+    float finalNoise = pow(combinedNoise, 30.0);
 
     // --- 5. Final Output: "White Dots on Black" ---
     // The RGB is pure white (1.0, 1.0, 1.0).
@@ -82,7 +82,7 @@ export default function Grain() {
           uTime: { value: 0 },
           // A very high intensity is needed to make the few surviving
           // specks from the pow() function brightly visible.
-          uIntensity: { value: 1.0 },
+          uIntensity: { value: 2.0 },
         }}
         transparent={true}
       />

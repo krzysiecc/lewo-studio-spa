@@ -8,24 +8,39 @@
 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import InteractiveAura from "./FX/InteractiveAura";
+import { useTranslation, Trans } from "react-i18next";
+
+import AnimatedText from "./FX/AnimatedText";
 
 export default function Hero() {
   const bigNameRef = useRef<HTMLHeadingElement>(null);
   const smallNameRef = useRef<HTMLParagraphElement>(null);
+  const longTextRef = useRef<HTMLDivElement>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
-    gsap.fromTo(
-      bigNameRef.current,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.3 }
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        bigNameRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.3 }
+      );
+      gsap.fromTo(
+        smallNameRef.current,
+        { opacity: 0, y: -50 },
+        { opacity: 1, y: 0, duration: 0.2, ease: "power2.inOut", delay: 0.4 }
+      );
 
-    gsap.fromTo(
-      smallNameRef.current,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.inOut", delay: 0.5 }
-    );
+      gsap.fromTo(
+        longTextRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1.5, ease: "power1.inOut", delay: 1.5 }
+      );
+    });
+
+    // Cleanup function
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -37,12 +52,12 @@ export default function Hero() {
         - 'absolute' and 'inset-0' makes this container fill the entire section.
         - '-z-10' puts it behind the text.
       */}
-        <div className="absolute inset-0 -z-10 flex flex-row">
-          {/* The First Aura (Thulian Pink) */}
+        {/* <div className="absolute inset-0 -z-10 flex flex-row">
+          {/* The First Aura (Thulian Pink)
           <div className="w-full h-full">
             <InteractiveAura color="#281d15" />
           </div>
-        </div>
+        </div> */}
 
         {/* CENTERED MAIN BLOCK */}
         <div className="flex-grow flex items-center w-full">
@@ -66,35 +81,18 @@ export default function Hero() {
 
               {/* "interior design" is in its own div, using flex to push it to the right. */}
               <div className="flex justify-end mt-2">
-                <span
-                  ref={smallNameRef}
-                  className="text-base md:text-lg font-normal tracking-wider"
-                >
-                  <span className="text-coffee-900">
-                    architectural & interior design
-                  </span>
+                <span ref={smallNameRef}>
+                  <AnimatedText
+                    el="span"
+                    className="text-base md:text-lg font-normal tracking-wider text-coffee-900"
+                    text={t("hero.subtitle")}
+                  >
+                    <Trans i18nKey={"hero.subtitle"} />
+                  </AnimatedText>
                 </span>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* SOME TEXT ZONE */}
-        <div className="layout-grid grid-cols-12 gap-4 w-full pb-20">
-          <div className="col-span-12 md:col-start-2 md:col-span-10">
-            <p className="text-sm md:text-base leading-relaxed">
-              currently working on a curated collection of elegant, functional
-              living spaces. from soft minimalism to bold personality-driven
-              forms.
-            </p>
-          </div>
-        </div>
-
-        {/* SCROLL DOWN HINT */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20">
-          <p className="opacity-60 text-xs tracking-wide uppercase">
-            scroll down
-          </p>
         </div>
       </section>
     </>

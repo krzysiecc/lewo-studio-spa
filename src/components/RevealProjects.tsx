@@ -9,14 +9,18 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import OverflowingIntro from "./ProjectsComponents/OverflowingIntro";
+import { useTranslation, Trans } from "react-i18next";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function RevealProject() {
+export default function RevealProjects() {
   const containerRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<SVGSVGElement>(null);
   const textTopRef = useRef<HTMLHeadingElement>(null);
   const textBottomRef = useRef<HTMLParagraphElement>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (
@@ -77,38 +81,44 @@ export default function RevealProject() {
 
   return (
     <>
-      <section
-        ref={containerRef}
-        className="relative min-h-screen flex items-center justify-center bg-seashell-100 overflow-hidden"
-      >
-        {/* SVG Circle that grows */}
-        <svg
-          ref={circleRef}
-          className="absolute w-[10rem] h-[10rem] z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid meet"
-          style={{ transform: "scale(1)", willChange: "transform" }}
-        >
-          <circle cx="50" cy="50" r="50" className="fill-thulian-300/95" />
-        </svg>
-
-        {/* Text that appears ON TOP of the circle */}
-        <div className="absolute z-20 text-center text-seashell-100 pointer-events-none">
-          <h2
-            ref={textTopRef}
-            className="text-4xl md:text-6xl font-extrabold"
-            style={{ clipPath: "inset(0 100% 0 0)" }} // Initial state for animation
-          >
-            Exploring the Projects
-          </h2>
-          <p
-            ref={textBottomRef}
-            className="text-lg mt-4 opacity-0" // Initial state for animation
-          >
-            A journey through curated spaces.
-          </p>
+      <div className="relative -mt-[8vh]">
+        <div className="pb-24">
+          {" "}
+          <OverflowingIntro />
         </div>
-      </section>
+        <section
+          ref={containerRef}
+          className="relative min-h-screen flex items-center justify-center bg-seashell-100 overflow-hidden"
+        >
+          {/* SVG Circle that grows */}
+          <svg
+            ref={circleRef}
+            className="absolute w-[10rem] h-[10rem] z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="xMidYMid meet"
+            style={{ transform: "scale(1)", willChange: "transform" }}
+          >
+            <circle cx="50" cy="50" r="50" className="fill-thulian-300/95" />
+          </svg>
+
+          {/* Text that appears ON TOP of the circle */}
+          <div className="absolute z-20 text-center text-seashell-100 pointer-events-none">
+            <h2
+              ref={textTopRef}
+              className="text-4xl md:text-6xl font-extrabold"
+              style={{ clipPath: "inset(0 100% 0 0)" }} // Initial state for animation
+            >
+              Exploring the Projects
+            </h2>
+            <p
+              ref={textBottomRef}
+              className="text-lg mt-4 opacity-0" // Initial state for animation
+            >
+              A journey through curated spaces.
+            </p>
+          </div>
+        </section>
+      </div>
     </>
   );
 }

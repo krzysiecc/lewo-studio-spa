@@ -8,6 +8,7 @@
 
 import { useState } from "react";
 import ChatbotWindow from "./ChatbotWindow";
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 
 export default function Chatbot({ isMenuOpen }: { isMenuOpen: boolean }) {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -19,15 +20,17 @@ export default function Chatbot({ isMenuOpen }: { isMenuOpen: boolean }) {
           transition-all duration-500 ease-in-out
           ${
             isMenuOpen
-              ? "opacity-0 -translate-x-16 pointer-events-none"
-              : "opacity-100 translate-x-0"
+              ? "opacity-0 translate-y-16 pointer-events-none"
+              : "opacity-100 translate-y-0"
           }
         `}
       >
         <button
           onClick={() => setIsChatOpen(true)}
-          className="w-16 h-16 bg-avocado-200 rounded-full flex items-center justify-center shadow-lg animate-breathing-glow"
-        ></button>
+          className="w-16 md:w-28 h-16 md:h-28 bg-coffee-900 rounded-full flex items-center justify-center shadow-lg animate-breathing-glow cursor-pointer"
+        >
+          <ChatBubbleOvalLeftEllipsisIcon className="size-7 md:size-15 text-seashell-50" />
+        </button>
       </div>
       {isChatOpen && <ChatbotWindow onClose={() => setIsChatOpen(false)} />}
     </>

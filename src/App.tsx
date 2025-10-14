@@ -8,8 +8,8 @@
 
 import Layout from "./components/Layout";
 import Hero from "./components/Hero";
-import RevealProject from "./components/RevealProject";
-import MainProjects from "./components/MainProject";
+import RevealProjects from "./components/RevealProjects";
+import Projects from "./components/Projects";
 import { LenisProvider } from "./context/LenisContext";
 
 export default function App() {
@@ -19,9 +19,9 @@ export default function App() {
         <Layout>
           <Hero />
 
-          <RevealProject />
+          <RevealProjects />
 
-          <MainProjects />
+          <Projects />
         </Layout>
       </main>
     </LenisProvider>
