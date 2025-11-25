@@ -1,4 +1,4 @@
-// components/ProjectsComponents/OverflowingIntro.tsx
+// components/projects/OverflowingIntro.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.

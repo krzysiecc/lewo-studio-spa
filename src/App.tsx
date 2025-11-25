@@ -6,22 +6,23 @@
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
+import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Hero from "./components/Hero";
-import RevealProjects from "./components/RevealProjects";
-import Projects from "./components/Projects";
 import { LenisProvider } from "./context/LenisContext";
+import HomePage from "./pages/HomePage";
+import ProjectsPage from "./pages/ProjectsPage";
+import ContactPage from "./pages/ContactPage";
 
 export default function App() {
   return (
     <LenisProvider>
       <main>
         <Layout>
-          <Hero />
-
-          <RevealProjects />
-
-          <Projects />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
         </Layout>
       </main>
     </LenisProvider>

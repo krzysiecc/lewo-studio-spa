@@ -1,4 +1,4 @@
-// components/LayoutComponents/ChatbotWindow.tsx
+// components/layout/ChatbotWindow.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.

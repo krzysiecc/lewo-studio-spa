@@ -1,15 +1,44 @@
 {
   "hero": {
-    "subtitle": "architektura i projektowanie wnętrz"
+    "name": {
+      "first": "lena",
+      "last_part1": "wojewódz",
+      "last_part2": "ka"
+    },
+    "subtitle": "studio projektowe"
   },
   "overlaymenu": {
+    "home": "Strona główna",
     "projects": "Projekty",
-    "about": "O mnie",
-    "studio": "Pracownia",
     "contact": "Kontakt"
   },
-  "revealprojects": {
-    "overflowingintro": "<0><1> Zastanawiałeś się kiedyś, jak powstają wnętrza, o których marzysz? </1> <2> Jak przenieść swoje wizje z głowy na papier, a potem zamienić je w rzeczywistość? </2> <3> Jeśli tu trafiłeś, to pewnie szukasz kogoś, kto zrobi to z sercem i pomysłem.</3> <4> Każdy projekt tworzę tak, jakbym projektowała go dla siebie - łącząc nowoczesny styl z funkcjonalnością i dbałością o każdy detal. Twoje potrzeby, pomysły i sugestie będą dla mnie tak samo ważne, jak moje doświadczenie i wiedza. Wspólnie znajdziemy najlepsze rozwiązania, nawet jeśli po drodze pojawią się wyzwania. Moim celem jest stworzyć przestrzeń, w której będziesz czuć się swobodnie i która będzie odzwierciedleniem Twojego charakteru. Zapraszam Cię do współpracy - zróbmy razem coś naprawdę wyjątkowego. </4></0>"
+  "home": {
+    "aboutIntro": {
+      "label": "o mnie",
+      "heading": "przestrzeń, która naprawdę jest twoja",
+      "body": "opowieść o mojej przestrzeni, wspólnym świetle, otaczających materiałach i Ludziach"
+    },
+    "projectsIntro": {
+      "label": "wprowadzenie do moich projektów",
+      "heading": "wybrane realizacje",
+      "body": "krótki przegląd przykładów Twojej przyszłej wspólnie zbudowanej wizji",
+      "cta": "przejdź do pracowni"
+    },
+    "contactIntro": {
+      "label": "kontakt",
+      "heading": "zaprojektujmy coś razem",
+      "body": " ",
+      "cta": "przejdź do strony kontaktu"
+    }
+  },
+  "projectsPage": {
+    "heading": "pracownia projektów",
+    "body": "miejsce na światło, ruch, historie"
+  },
+  "contactPage": {
+    "heading": "porozmawiajmy",
+    "body": "od tego miejsca rozpoczyna się świetna przygoda i prawdziwy profesjonalizm",
+    "formComingSoon": "formularz kontaktowy już wkrótce"
   },
 
   "langSwitcher": "PL"

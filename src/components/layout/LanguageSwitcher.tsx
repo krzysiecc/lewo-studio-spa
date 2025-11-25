@@ -1,4 +1,4 @@
-// components/LayoutComponents/LanguageSwitcher.tsx
+// components/layout/LanguageSwitcher.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.

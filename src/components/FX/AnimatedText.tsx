@@ -27,16 +27,24 @@ export default function AnimatedText({
       style={{
         position: "relative",
         display: "inline-block",
-        overflow: "hidden",
+        // Large padding to contain the glow without hard clipping near the text
+        padding: "1.5em 1em",
+        margin: "-1.5em -1em",
+        verticalAlign: "bottom",
+        // Soft mask to fade out the glow at the far edges instead of a hard cut
+        maskImage:
+          "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
       }}
     >
       <AnimatePresence mode="wait">
         <motion.span
           key={text}
-          initial={{ y: "110%" }}
-          animate={{ y: "0%" }}
-          exit={{ y: "-110%" }}
-          transition={{ duration: 0.4, ease: "circOut" }}
+          initial={{ y: "120%", opacity: 0, filter: "blur(8px)" }}
+          animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+          exit={{ y: "-120%", opacity: 0, filter: "blur(8px)" }}
+          transition={{ duration: 0.5, ease: "circOut" }}
           style={{ display: "inline-block" }}
         >
           {children}

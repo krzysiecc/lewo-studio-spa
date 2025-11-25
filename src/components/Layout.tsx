@@ -7,8 +7,8 @@
 // LICENSE file in the root directory of this source tree.
 
 import React, { useState } from "react";
-import Header from "./LayoutComponents/Header";
-import Chatbot from "./LayoutComponents/Chatbot";
+import Header from "./layout/Header";
+// import Chatbot from "./layout/Chatbot";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* Header floats on top */}
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
-      <Chatbot isMenuOpen={isMenuOpen} />
+      {/* <Chatbot isMenuOpen={isMenuOpen} /> */}
 
       {/* The main content area has padding, creating the "frame" */}
       <main className="relative z-0">{children}</main>

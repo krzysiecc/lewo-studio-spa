@@ -74,7 +74,7 @@ const MenuOverlayRender: ForwardRefRenderFunction<
   const menuItems = useMemo(
     () => [
       {
-        label: t("overlaymenu.projects"),
+        label: t("overlaymenu.home"),
         path: "/",
         colorClass: "text-thulian-400",
         glowClass: "glow-thulian",
@@ -83,20 +83,12 @@ const MenuOverlayRender: ForwardRefRenderFunction<
           "a curated collection of elegant, functional living spaces",
       },
       {
-        label: t("overlaymenu.about"),
-        path: "/about",
-        colorClass: "text-avocado-400",
-        glowClass: "glow-avocado",
-        image: "/unsplash1.jpg",
-        description: "driven by a passion for form, function, and personality",
-      },
-      {
-        label: t("overlaymenu.studio"),
-        path: "/studio",
+        label: t("overlaymenu.projects"),
+        path: "/projects",
         colorClass: "text-bluepowder-400",
         glowClass: "glow-bluepowder",
         image: "/unsplash3.jpg",
-        description: "where ideas take shape and visions become reality",
+        description: "a dedicated space for motion, light and detail",
       },
       {
         label: t("overlaymenu.contact"),

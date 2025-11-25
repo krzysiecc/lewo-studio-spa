@@ -13,7 +13,7 @@ import ShadowyClouds from "./ShadowyClouds";
 
 // This is our simple "bridge". It's an object that both components can see.
 export const fxBridge = {
-  update: (isHovered: boolean, color: string) => {},
+  update: (_isHovered: boolean, _color: string) => {},
 };
 
 type MenuBackgroundProps = {

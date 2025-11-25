@@ -1,4 +1,4 @@
-// components/Logos/LogoMain.tsx
+// components/misc/LogoMain.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.

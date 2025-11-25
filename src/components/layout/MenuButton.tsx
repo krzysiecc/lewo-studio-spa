@@ -1,4 +1,4 @@
-// components/LayoutComponents/MixerButton.tsx
+// components/layout/MixerButton.tsx
 
 // Copyright (c) 2025, Krzysztof Wiłnicki
 // All rights reserved.
@@ -6,15 +6,16 @@
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
-type MixerButtonProps = {
+type MenuButtonProps = {
   isOpen: boolean;
   onClick: () => void;
 };
 
-export default function MixerButton({ isOpen, onClick }: MixerButtonProps) {
+export default function MenuButton({ isOpen, onClick }: MenuButtonProps) {
   return (
     <button
-      aria-label="Menu"
+      aria-label={isOpen ? "Close menu" : "Open menu"}
+      aria-expanded={isOpen}
       onClick={onClick}
       className="relative z-50 flex items-center justify-center w-20 h-20 text-coffee-900/80 group"
     >
