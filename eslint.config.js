@@ -1,4 +1,4 @@
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -8,6 +8,8 @@ import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 import tseslint from "typescript-eslint";
 import { globalIgnores } from "eslint/config";
 
@@ -18,7 +20,7 @@ export default tseslint.config([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
-      // tseslint.configs.stylisticTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
 
       reactX.configs["recommended-typescript"],
       reactHooks.configs["recommended-latest"],

@@ -1,6 +1,6 @@
 // components/Hero.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -10,7 +10,7 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useTranslation, Trans } from "react-i18next";
 
-import AnimatedText from "../FX/AnimatedText";
+import AnimatedText from "../../components/effects/AnimatedText";
 import { ANIMATION_CONSTANTS } from "../../constants/animations";
 
 export default function Hero() {
@@ -31,7 +31,7 @@ export default function Hero() {
           duration: ANIMATION_CONSTANTS.HERO.BIG_NAME_DURATION,
           ease: "power3.out",
           delay: ANIMATION_CONSTANTS.HERO.BIG_NAME_DELAY,
-        }
+        },
       );
       gsap.fromTo(
         smallNameRef.current,
@@ -42,7 +42,7 @@ export default function Hero() {
           duration: ANIMATION_CONSTANTS.HERO.SMALL_NAME_DURATION,
           ease: "power2.inOut",
           delay: ANIMATION_CONSTANTS.HERO.SMALL_NAME_DELAY,
-        }
+        },
       );
 
       gsap.fromTo(
@@ -53,7 +53,7 @@ export default function Hero() {
           duration: ANIMATION_CONSTANTS.HERO.LONG_TEXT_DURATION,
           ease: "power1.inOut",
           delay: ANIMATION_CONSTANTS.HERO.LONG_TEXT_DELAY,
-        }
+        },
       );
     });
 

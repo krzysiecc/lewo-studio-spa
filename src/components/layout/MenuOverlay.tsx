@@ -1,35 +1,37 @@
 // components/MenuOverlay.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
-//
-// This source code is licensed under the BSD-style license found in the
-// LICENSE file in the root directory of this source tree.
 
 import {
   useState,
   useEffect,
   useRef,
-  forwardRef,
   useImperativeHandle,
-  type ForwardRefRenderFunction,
   useMemo,
+  type Ref,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSharedLenis } from "../context/LenisContext";
+// Use the new hook file path
+import { useSharedLenis } from "../../hooks/useSharedLenis";
 import gsap from "gsap";
-import { MenuBackground, fxBridge } from "./FX/MenuBackground";
+// Use the new bridge file path
+import { fxBridge } from "../../utils/fxBridge";
+import { MenuBackground } from "../effects/MenuBackground";
 
 import { Trans, useTranslation } from "react-i18next";
-import AnimatedText from "./FX/AnimatedText";
+import AnimatedText from "../effects/AnimatedText";
 
 // ============================================================================
 // Configuration
 // ============================================================================
 
-export type MenuOverlayRef = { close: () => void };
+export interface MenuOverlayRef {
+  close: () => void;
+}
 
-function shuffleArray(array: any[]) {
+// Fix: Use Generics <T> to avoid 'any' type errors
+function shuffleArray<T>(array: T[]): T[] {
   let currentIndex = array.length,
     randomIndex;
   while (currentIndex !== 0) {
@@ -44,7 +46,7 @@ function shuffleArray(array: any[]) {
 }
 
 const GOOGLE_MAPS_EMBED_URL =
-  "https://maps.google.com/maps?width=720&amp;height=720&amp;hl=en&amp;q=Horbaczewskiego%2045,%20Wroc%C5%82aw+(Lena%20Wojew%C3%B3dzka%20Design%20Studio)&amp;t=h&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed";
+  "https://maps.google.com/maps?width=720&height=720&hl=en&q=Horbaczewskiego%2045,%20Wroc%C5%82aw+(Lena%20Wojew%C3%B3dzka%20Design%20Studio)&t=h&z=12&ie=UTF8&iwloc=B&output=embed";
 
 const colorMap = {
   "text-thulian-400": "#e2608d",
@@ -53,17 +55,19 @@ const colorMap = {
   "text-seashell-500": "#eeae8d",
 };
 
-// 👇 FIX: Use a subtly visible color for the default cloud state
 const defaultHexColor = "#ffffff";
 
 // ============================================================================
 // Main Menu Overlay Component
 // ============================================================================
 
-const MenuOverlayRender: ForwardRefRenderFunction<
-  MenuOverlayRef,
-  { onClose: () => void }
-> = ({ onClose }, ref) => {
+// Fix: Refactored for React 19 style (ref in props) and TypeScript strictness
+interface MenuOverlayProps {
+  onClose: () => void;
+  ref?: Ref<MenuOverlayRef>; // React 19 allows ref in props
+}
+
+const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
   const navigate = useNavigate();
   const lenisRef = useSharedLenis();
   const mainContainerRef = useRef<HTMLDivElement>(null);
@@ -76,8 +80,8 @@ const MenuOverlayRender: ForwardRefRenderFunction<
       {
         label: t("overlaymenu.home"),
         path: "/",
-        colorClass: "text-thulian-400",
-        glowClass: "glow-thulian",
+        colorClass: "text-seashell-400",
+        glowClass: "glow-seashell",
         image: "/unsplash2.jpg",
         description:
           "a curated collection of elegant, functional living spaces",
@@ -85,21 +89,21 @@ const MenuOverlayRender: ForwardRefRenderFunction<
       {
         label: t("overlaymenu.projects"),
         path: "/projects",
-        colorClass: "text-bluepowder-400",
-        glowClass: "glow-bluepowder",
+        colorClass: "text-avocado-400",
+        glowClass: "glow-avocado",
         image: "/unsplash3.jpg",
         description: "a dedicated space for motion, light and detail",
       },
       {
         label: t("overlaymenu.contact"),
         path: "/contact",
-        colorClass: "text-seashell-500",
+        colorClass: "text-seashell-400",
         glowClass: "glow-seashell",
         isMap: true,
         description: "located in the heart of the creative district",
       },
     ],
-    [t]
+    [t],
   );
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -120,29 +124,32 @@ const MenuOverlayRender: ForwardRefRenderFunction<
     lenisInstance?.stop();
 
     const ctx = gsap.context(() => {
-      const navLinks = gsap.utils.toArray(".nav-link");
+      // Fix: Cast to HTMLElement[] to avoid unsafe arguments in shuffleArray downstream
+      const navLinks = gsap.utils.toArray<HTMLElement>(".nav-link");
 
-      // 👇 FIX: Disable pointer events at the start of the animation
       gsap.set(navLinks, { pointerEvents: "none" });
 
       const tl = gsap.timeline({
-        // 👇 FIX: Re-enable pointer events only when the animation is complete
         onComplete: () => {
           gsap.set(navLinks, { pointerEvents: "auto" });
         },
       });
 
-      tl.to(mainContainerRef.current, {
-        opacity: 1,
-        duration: 1.0,
-        ease: "power2.inOut",
-        onStart: () => {
-          // Tell the background to animate to its default, visible state.
-          fxBridge.update(false, defaultHexColor);
-        },
-      });
+      // Fix: mainContainerRef.current is strictly typed, so this is fine
+      if (mainContainerRef.current) {
+        tl.to(mainContainerRef.current, {
+          opacity: 1,
+          duration: 1.0,
+          ease: "power2.inOut",
+          onStart: () => {
+            fxBridge.update(false, defaultHexColor);
+          },
+        });
+      }
 
+      // Fix: navLinks is now properly typed, shuffleArray uses Generics
       const shuffledLinks = shuffleArray(navLinks);
+
       shuffledLinks.forEach((link, index) => {
         const sequenceStartTime = 1.0 + index * 0.2;
         tl.fromTo(
@@ -156,7 +163,7 @@ const MenuOverlayRender: ForwardRefRenderFunction<
             repeat: 3,
             yoyo: true,
           },
-          sequenceStartTime
+          sequenceStartTime,
         );
         tl.to(
           link,
@@ -167,7 +174,7 @@ const MenuOverlayRender: ForwardRefRenderFunction<
             duration: 0.5,
             ease: "expo.out",
           },
-          sequenceStartTime + 0.08 * 4
+          sequenceStartTime + 0.08 * 4,
         );
       });
     }, mainContainerRef);
@@ -184,7 +191,7 @@ const MenuOverlayRender: ForwardRefRenderFunction<
       gsap.fromTo(
         previewContainerRef.current,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
       );
     } else {
       gsap.to(previewContainerRef.current, {
@@ -205,16 +212,20 @@ const MenuOverlayRender: ForwardRefRenderFunction<
 
     fxBridge.update(false, defaultHexColor);
 
-    exitTimeline.to([".nav-link", previewContainerRef.current], {
-      opacity: 0,
-      filter: "blur(10px)",
-      duration: 0.4,
-      ease: "power2.in",
-    });
+    // Fix: Cast array to TweenTarget
+    exitTimeline.to(
+      [".nav-link", previewContainerRef.current] as gsap.TweenTarget,
+      {
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 0.4,
+        ease: "power2.in",
+      },
+    );
     exitTimeline.to(
       mainContainerRef.current,
       { opacity: 0, duration: 0.8, ease: "power2.inOut" },
-      "<"
+      "<",
     );
   };
 
@@ -235,7 +246,7 @@ const MenuOverlayRender: ForwardRefRenderFunction<
     <div ref={mainContainerRef} className="fixed inset-0 z-40 opacity-0">
       {/* LAYER 1: Backdrop (click to close) */}
       <button
-        type="button"
+        type="button" // Fix: Added explicit type
         aria-label="Close menu"
         className="absolute inset-0 z-10 bg-black/99"
         onClick={handleClose}
@@ -269,6 +280,9 @@ const MenuOverlayRender: ForwardRefRenderFunction<
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                       title="Studio location"
+                      // Google Maps requires both scripts and same-origin to work interactively
+                      // eslint-disable-next-line react-dom/no-unsafe-iframe-sandbox
+                      sandbox="allow-scripts allow-same-origin allow-popups"
                     />
                   </div>
                 ) : (
@@ -290,12 +304,13 @@ const MenuOverlayRender: ForwardRefRenderFunction<
             <nav className="relative flex flex-col items-end gap-4">
               {menuItems.map((item, index) => (
                 <button
+                  type="button" // Fix: Added explicit type
                   key={item.path}
                   className={`
               nav-link cursor-pointer
               font-antonio text-5xl/[1.5] md:text-7xl/[1.5] lowercase
               transition-colors duration-300 text-glow text-right
-			tracking-widest
+            tracking-widest
               ${item.colorClass}
             `}
                   onMouseEnter={() => setActiveIndex(index)}
@@ -322,5 +337,4 @@ const MenuOverlayRender: ForwardRefRenderFunction<
   );
 };
 
-const MenuOverlay = forwardRef(MenuOverlayRender);
 export default MenuOverlay;

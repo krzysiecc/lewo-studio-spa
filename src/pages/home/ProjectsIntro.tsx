@@ -2,7 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import AnimatedText from "../FX/AnimatedText";
+import AnimatedText from "../../components/effects/AnimatedText";
 
 export default function ProjectsIntro() {
   const navigate = useNavigate();
@@ -27,13 +27,16 @@ export default function ProjectsIntro() {
               {t("home.projectsIntro.body")}
             </AnimatedText>
           </p>
-          <button
-            type="button"
-            onClick={() => navigate("/projects")}
-            className="inline-flex items-center px-6 py-3 rounded-full border border-seashell-300/60 bg-coffee-800/40 hover:bg-coffee-700/60 text-sm font-mono tracking-[0.2em] uppercase"
-          >
-            {t("home.projectsIntro.cta")}
-          </button>
+          <AnimatedText text={t("home.projectsIntro.cta")}>
+            <button
+              type="button"
+              onClick={() => void navigate("/projects")}
+              className="inline-flex items-center px-8 py-3 rounded-full border border-seashell-300/60 bg-coffee-200/40 hover:bg-coffee-400/40 text-sm font-mono tracking-[0.2em] uppercase cursor-pointer
+        transition-colors duration-300 ease-in-out"
+            >
+              {t("home.projectsIntro.cta")}
+            </button>
+          </AnimatedText>
         </div>
       </div>
     </section>

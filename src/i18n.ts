@@ -1,6 +1,6 @@
 // i18n.ts
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -11,35 +11,35 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
 
-i18n
-  .use(HttpApi) // 👈 Loads translations from server/public folder
-  .use(LanguageDetector) // 👈 Detects user language
-  .use(initReactI18next) // 👈 Passes i18n instance to react-i18next
+void i18n
+  .use(HttpApi) // loads translations from server/public folder
+  .use(LanguageDetector) // detects user language
+  .use(initReactI18next) // passes i18n instance to react-i18next
   .init({
-    // What language to use if translations in user language are not available
+    // what language to use if translations in user language are not available
     fallbackLng: "en",
 
-    // An array of the languages you support
+    // an array of supported languages
     supportedLngs: ["en", "pl"],
 
-    // Let i18next-http-backend know where to find the files
+    // specify where i18next-http-backend should find translation files
     backend: {
       loadPath: "/locales/{{lng}}/translation.json",
     },
 
-    // Allow an empty string as a valid translation key
-    // This is useful for keys that might not have a translation yet
+    // allow an empty string as a valid translation key
+    // useful for keys that may not have a translation yet
     returnEmptyString: false,
 
-    // React-specific options
+    // react-specific options
     react: {
-      // This allows you to use <br/> and other simple HTML tags inside your translations
+      // allow use of <br/> and other simple HTML tags inside translations
       transKeepBasicHtmlNodesFor: ["br", "strong", "i"],
-      // We will wrap our app in a Suspense component to handle loading
+      // application should be wrapped in a Suspense component to handle loading
       useSuspense: true,
     },
 
-    // For React, we don't need to escape values as it does it by default
+    // for react, escaping values is not necessary because it is handled by react by default
     interpolation: {
       escapeValue: false,
     },

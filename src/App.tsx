@@ -1,17 +1,17 @@
 // App.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import { LenisProvider } from "./context/LenisContext";
-import HomePage from "./pages/HomePage";
-import ProjectsPage from "./pages/ProjectsPage";
-import ContactPage from "./pages/ContactPage";
+import Layout from "./components/layout/Layout";
+import { LenisProvider } from "./context/LenisProvider";
+import HomePage from "./pages/home/HomePage";
+import ProjectsPage from "./pages/projects/ProjectsPage";
+import ContactPage from "./pages/contact/ContactPage";
 
 export default function App() {
   return (

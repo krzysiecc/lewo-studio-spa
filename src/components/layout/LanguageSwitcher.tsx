@@ -1,6 +1,6 @@
 // components/layout/LanguageSwitcher.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -41,7 +41,7 @@ export default function LanguageSwitcher() {
       onComplete: () => {
         // Change language
         const newLang = i18n.language === "en" ? "pl" : "en";
-        i18n.changeLanguage(newLang);
+        void i18n.changeLanguage(newLang);
         // Instantly move the text to the bottom, ready to animate in
         gsap.set(textRef.current, { yPercent: 100 });
         // Animate in the new text
@@ -61,7 +61,7 @@ export default function LanguageSwitcher() {
       gsap.fromTo(
         textRef.current,
         { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+        { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
       );
     }
   }, [i18n.language]);
@@ -69,6 +69,7 @@ export default function LanguageSwitcher() {
   return (
     <button
       ref={buttonRef}
+      type="button"
       onClick={handleLanguageChange}
       onMouseEnter={handleMouseEnter} // Add mouse enter event
       onMouseLeave={handleMouseLeave} // Add mouse leave event

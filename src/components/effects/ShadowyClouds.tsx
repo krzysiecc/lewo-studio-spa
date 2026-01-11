@@ -1,6 +1,6 @@
 // components/FX/ShadowyClouds.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -26,7 +26,6 @@ const cloudFragmentShader = `
   uniform float uOpacity;
   uniform vec3 uColor;
 
-	 // 👇 Our new "control panel" uniforms
   uniform float uScale;
   uniform float uSpeed;
   uniform float uContrast;
@@ -56,18 +55,15 @@ const cloudFragmentShader = `
     return 130.0 * dot(m, g);
   }
 
-   // A simple hash function to generate our dithering noise
   float random(vec2 p) { 
     return fract(sin(dot(p.xy, vec2(12.9898, 78.233))) * 43758.5453);
   }
 
   void main() {
-    // 👇 Use the uniforms instead of "magic numbers"
     float noise = snoise((vUv + uTime * uSpeed) * uScale);
     noise = (noise + 1.0) / 2.0;
     noise = pow(noise, uContrast);
     
-    // The dithering logic for antialiasing is perfect and stays
     float dither = random(gl_FragCoord.xy) * (1.0 / 255.0);
     float finalAlpha = (noise * uOpacity) + dither;
     
@@ -75,7 +71,7 @@ const cloudFragmentShader = `
   }
 `;
 
-type ShadowyCloudsProps = {
+interface ShadowyCloudsProps {
   bridge: {
     update: (isHovered: boolean, color: string) => void;
   };
@@ -83,7 +79,7 @@ type ShadowyCloudsProps = {
   scale?: number;
   speed?: number;
   contrast?: number;
-};
+}
 
 export default function ShadowyClouds({
   bridge,
@@ -95,34 +91,34 @@ export default function ShadowyClouds({
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   useEffect(() => {
-    // The self-initializing animation is PERFECT.
     if (!materialRef.current) return;
-    gsap.to(materialRef.current.uniforms.uOpacity, {
+
+    // Fix: Type casting to TweenTarget for TS strictness
+    gsap.to(materialRef.current.uniforms.uOpacity as gsap.TweenTarget, {
       value: 0.15,
       duration: 1.2,
       delay: 0.5,
       ease: "power2.out",
     });
 
-    // The bridge listener is where we make the final fix.
     bridge.update = (isHovered, color) => {
       if (!materialRef.current) return;
 
-      // --- 👇 THIS IS THE DEFINITIVE FIX ---
-      // Immediately kill any active animations on these specific properties
-      // before starting new ones. This prevents all race conditions.
-      gsap.killTweensOf(materialRef.current.uniforms.uOpacity);
-      gsap.killTweensOf(materialRef.current.uniforms.uColor.value);
+      // Fix: Type casting for killTweensOf
+      gsap.killTweensOf(
+        materialRef.current.uniforms.uOpacity as gsap.TweenTarget,
+      );
+      gsap.killTweensOf(
+        materialRef.current.uniforms.uColor.value as gsap.TweenTarget,
+      );
 
-      // Now, we can safely create the new animations.
-      // If hovered, animate in.
       if (isHovered) {
-        gsap.to(materialRef.current.uniforms.uOpacity, {
+        gsap.to(materialRef.current.uniforms.uOpacity as gsap.TweenTarget, {
           value: 0.4,
           duration: 1.0,
           ease: "power2.inOut",
         });
-        gsap.to(materialRef.current.uniforms.uColor.value, {
+        gsap.to(materialRef.current.uniforms.uColor.value as gsap.TweenTarget, {
           r: new THREE.Color(color).r,
           g: new THREE.Color(color).g,
           b: new THREE.Color(color).b,
@@ -130,14 +126,13 @@ export default function ShadowyClouds({
           ease: "power2.out",
         });
       } else {
-        // If NOT hovered, animate out quickly.
-        gsap.to(materialRef.current.uniforms.uOpacity, {
+        gsap.to(materialRef.current.uniforms.uOpacity as gsap.TweenTarget, {
           value: 0.15,
           duration: 0.3,
           ease: "power2.out",
         });
-        gsap.to(materialRef.current.uniforms.uColor.value, {
-          r: new THREE.Color(color).r, // `color` will be the defaultHexColor
+        gsap.to(materialRef.current.uniforms.uColor.value as gsap.TweenTarget, {
+          r: new THREE.Color(color).r,
           g: new THREE.Color(color).g,
           b: new THREE.Color(color).b,
           duration: 0.3,

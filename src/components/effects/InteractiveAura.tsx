@@ -1,6 +1,6 @@
 // components/InteractiveAuraMouseOnly.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -43,6 +43,12 @@ const fragmentShader = `
 	}
 `;
 
+interface AuraUniforms {
+  uTime: { value: number };
+  uMouse: { value: THREE.Vector2 };
+  uColor: { value: THREE.Color };
+}
+
 function MouseAuraGrain({ color }: { color: THREE.Color }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
@@ -52,15 +58,16 @@ function MouseAuraGrain({ color }: { color: THREE.Color }) {
       uMouse: { value: new THREE.Vector2(-1, -1) },
       uColor: { value: color },
     }),
-    [color]
+    [color],
   );
 
   useFrame((state) => {
     if (!materialRef.current) return;
-    materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
-    materialRef.current.uniforms.uMouse.value.set(
+    const uniforms = materialRef.current.uniforms as unknown as AuraUniforms;
+    uniforms.uTime.value = state.clock.getElapsedTime();
+    uniforms.uMouse.value.set(
       state.pointer.x * 0.5 + 0.5,
-      state.pointer.y * 0.5 + 0.5
+      state.pointer.y * 0.5 + 0.5,
     );
   });
 
@@ -80,9 +87,9 @@ function MouseAuraGrain({ color }: { color: THREE.Color }) {
 }
 
 // --- The main exportable component ---
-type InteractiveAuraProps = {
+interface InteractiveAuraProps {
   color?: string | THREE.Color; // Accept a string (e.g., '#ff0000') or a THREE.Color object
-};
+}
 
 export default function InteractiveAura({
   color = "#ffffff",

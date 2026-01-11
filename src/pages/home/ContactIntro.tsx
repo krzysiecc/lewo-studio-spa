@@ -2,7 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import AnimatedText from "../FX/AnimatedText";
+import AnimatedText from "../../components/effects/AnimatedText";
 
 export default function ContactIntro() {
   const navigate = useNavigate();
@@ -27,13 +27,18 @@ export default function ContactIntro() {
               {t("home.contactIntro.body")}
             </AnimatedText>
           </p>
-          <button
-            type="button"
-            onClick={() => navigate("/contact")}
-            className="inline-flex items-center px-6 py-3 rounded-full border border-coffee-400/60 bg-white/60 hover:bg-white text-sm font-mono tracking-[0.2em] uppercase"
-          >
-            {t("home.contactIntro.cta")}
-          </button>
+          <AnimatedText text={t("home.contactIntro.cta")}>
+            <button
+              type="button"
+              onClick={() => {
+                void navigate("/contact");
+              }}
+              className="inline-flex items-center px-8 py-3 rounded-full border border-coffee-400/40 bg-white/30 hover:bg-avocado-800 text-sm font-mono tracking-[0.2em] uppercase cursor-pointer
+        transition-colors duration-300 ease-in-out"
+            >
+              {t("home.contactIntro.cta")}
+            </button>
+          </AnimatedText>
         </div>
       </div>
     </section>

@@ -6,26 +6,26 @@
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
-import { useRef, useEffect, useState } from "react";
-import MenuOverlay, { type MenuOverlayRef } from "../MenuOverlay";
+import { useRef, useEffect } from "react";
+import MenuOverlay, { type MenuOverlayRef } from "./MenuOverlay";
 import MenuButton from "./MenuButton";
-import LogoMain from "../misc/LogoMain";
+import LogoMain from "../../utils/misc/LogoMain";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 import gsap from "gsap";
 import { ANIMATION_CONSTANTS } from "../../constants/animations";
 
-type HeaderProps = {
+interface HeaderProps {
   isMenuOpen: boolean;
   setIsMenuOpen: (isOpen: boolean) => void;
-};
+}
 
 export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
   const menuRef = useRef<MenuOverlayRef>(null);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<SVGSVGElement>(null);
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
-  const [headerColor, setHeaderColor] = useState("#281d15");
+  const headerColor = "#281d15";
 
   // Detect background color beneath header
   //   useEffect(() => {

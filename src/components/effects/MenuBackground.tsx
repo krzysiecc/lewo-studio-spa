@@ -10,18 +10,15 @@ import { memo } from "react";
 import { Canvas } from "@react-three/fiber";
 import Grain from "./Grain";
 import ShadowyClouds from "./ShadowyClouds";
+// Import the bridge from the new file
+import { fxBridge } from "../../utils/fxBridge";
 
-// This is our simple "bridge". It's an object that both components can see.
-export const fxBridge = {
-  update: (_isHovered: boolean, _color: string) => {},
-};
-
-type MenuBackgroundProps = {
+interface MenuBackgroundProps {
   defaultCloudColor: string;
   cloudScale?: number;
   cloudSpeed?: number;
   cloudContrast?: number;
-};
+}
 
 const MenuBackgroundComponent = ({
   defaultCloudColor,

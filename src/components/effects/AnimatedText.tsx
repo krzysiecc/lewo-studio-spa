@@ -1,6 +1,6 @@
 // components/FX/AnimatedText.tsx
 
-// Copyright (c) 2025, Krzysztof Wiłnicki
+// Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
@@ -9,12 +9,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { type ReactNode } from "react";
 
-type AnimatedTextProps = {
+interface AnimatedTextProps {
   children: ReactNode;
   text: string;
   el?: React.ElementType;
   className?: string;
-};
+}
 
 export default function AnimatedText({
   children,
