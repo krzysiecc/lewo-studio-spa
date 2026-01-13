@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="EyeSymbol" overflow="visible">
+      <g transform="translate(-165.6, -272)">
+        <ellipse cx="165.6" cy="272" rx="232.9" ry="230" style="fill:#a895ff;stroke:#09173e;stroke-width:20.3px;"/>
+        <path d="M215.8,357c-31.5,-15.9 -70,-3.7 -86.6,27.5c-0,0 -0,0 -0,0c-17.8,34.6 -59.3,47 -92.7,27.7c-33.4,-19.3 -46.1,-63 -28.3,-97.6l67.7,-129.8c0.6,-1.2 14.8,-29.1 29,-57.2c17.1,-33.6 55.7,-50.2 91.8,-39.5c0,0 0,0 0,0c0,0 19.2,6.3 32.5,12c28.1,12 16.1,44.2 16.1,44.2l77,36.4l-82.3,188.5c-0,0 -10.6,-5.4 -24.1,-12.2Z" style="fill:#fff;stroke:#09173e;stroke-width:22.5px;"/>
+        <path d="M187,233c21.3,3.3 36.3,23.3 33.6,44.8c-2.7,21.5 -22.2,36.3 -43.4,33c-21.3,-3.3 -36.3,-23.3 -33.6,-44.8c2.7,-21.5 22.2,-36.3 43.4,-33Z" style="fill:#fff;stroke:#09173e;stroke-width:22.2px;stroke-linecap:butt;"/>
+        <path d="M175.8,259.8c6.7,-3.5 15,-0.8 18.5,5.9c3.5,6.7 0.9,15 -5.8,18.5c-6.7,3.5 -15,0.8 -18.5,-5.9c-3.5,-6.7 -0.9,-15 5.8,-18.5Z" style="fill:#09173e;stroke:#09173e;stroke-width:15px;stroke-linecap:butt;"/>
+      </g>
+    </symbol>
+
+    <pattern id="SeamlessDiceLayout" x="0" y="0" width="800" height="800" patternUnits="userSpaceOnUse">
+      
+      <use href="#EyeSymbol" x="400" y="400" />
+
+      <use href="#EyeSymbol" x="0" y="0" />
+      <use href="#EyeSymbol" x="800" y="0" />
+      <use href="#EyeSymbol" x="0" y="800" />
+      <use href="#EyeSymbol" x="800" y="800" />
+      
+    </pattern>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="url(#SeamlessDiceLayout)" />
+</svg>

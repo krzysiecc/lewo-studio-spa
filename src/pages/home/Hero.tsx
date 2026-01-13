@@ -65,15 +65,15 @@ export default function Hero() {
     <section className="-z-10 relative min-h-screen bg-seashell-100 flex flex-col justify-between">
       {/* CENTERED MAIN BLOCK */}
       <div className="flex-grow flex items-center w-full">
-        <div className="layout-grid grid-cols-12 gap-x-4 items-center">
+        <div className="layout-grid grid grid-cols-12 gap-x-4 items-center">
           <div className="col-start-2 col-span-10">
             {/* "lena" is in its own div. */}
             <div ref={bigNameRef} className="text-left">
               <h1
-                className="font-bold tracking-tight leading-none font-antonio"
+                className="font-medium tracking-tight leading-none font-urbanist"
                 style={{
-                  fontSize: "clamp(3.5rem, 10vw, 9rem)",
-                  lineHeight: 1.0,
+                  fontSize: "clamp(2.5rem, 7vw, 9rem)",
+                  lineHeight: 0.8,
                 }}
               >
                 <span className="text-avocado-700 uppercase">

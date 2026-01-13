@@ -2,6 +2,9 @@
 
 // Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
 
 // We move this object to a separate file so HMR doesn't break
 // when editing the React components that use it.

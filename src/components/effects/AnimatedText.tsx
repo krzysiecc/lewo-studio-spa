@@ -14,6 +14,9 @@ interface AnimatedTextProps {
   text: string;
   el?: React.ElementType;
   className?: string;
+  padForGlow?: boolean;
+  style?: React.CSSProperties;
+  fullWidth?: boolean;
 }
 
 export default function AnimatedText({
@@ -21,21 +24,27 @@ export default function AnimatedText({
   text,
   el = "span",
   className,
+  padForGlow = true,
+  style,
+  fullWidth = false,
 }: AnimatedTextProps) {
   const childContent = (
     <span
       style={{
         position: "relative",
-        display: "inline-block",
+        display: fullWidth ? "block" : "inline-block",
+        width: fullWidth ? "100%" : undefined,
         // Large padding to contain the glow without hard clipping near the text
-        padding: "1.5em 1em",
-        margin: "-1.5em -1em",
+        padding: padForGlow ? "1.5em 1em" : 0,
+        margin: padForGlow ? "-1.5em -1em" : 0,
         verticalAlign: "bottom",
         // Soft mask to fade out the glow at the far edges instead of a hard cut
-        maskImage:
-          "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
-        WebkitMaskImage:
-          "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
+        maskImage: padForGlow
+          ? "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)"
+          : undefined,
+        WebkitMaskImage: padForGlow
+          ? "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)"
+          : undefined,
       }}
     >
       <AnimatePresence mode="wait">
@@ -53,5 +62,5 @@ export default function AnimatedText({
     </span>
   );
 
-  return React.createElement(el, { className }, childContent);
+  return React.createElement(el, { className, style }, childContent);
 }

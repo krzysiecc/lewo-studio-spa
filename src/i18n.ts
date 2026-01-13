@@ -23,8 +23,9 @@ void i18n
     supportedLngs: ["en", "pl"],
 
     // specify where i18next-http-backend should find translation files
+    // use {{ns}} so namespace files like `knssd.json` are loaded correctly
     backend: {
-      loadPath: "/locales/{{lng}}/translation.json",
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
 
     // allow an empty string as a valid translation key

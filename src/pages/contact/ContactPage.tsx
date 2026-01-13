@@ -12,9 +12,9 @@ export default function ContactPage() {
   const { t } = useTranslation();
   return (
     <section className="min-h-screen bg-seashell-100 text-coffee-900">
-      <div className="layout-grid py-24">
+      <div className="layout-grid grid grid-cols-12 gap-4 md:gap-6 py-24">
         <div className="col-span-12 md:col-span-6">
-          <h1 className="font-antonio text-5xl md:text-7xl lowercase">
+          <h1 className="font-urbanist text-5xl md:text-7xl lowercase">
             {t("contactPage.heading")}
           </h1>
           <p className="mt-4 max-w-md text-coffee-700">
@@ -25,7 +25,7 @@ export default function ContactPage() {
         <div className="col-span-12 md:col-span-6">
           {/* TODO: replace with a React Bits form */}
           <div className="bg-white/60 rounded-xl p-6 shadow-lg">
-            <p className="font-mono text-sm text-coffee-700/80">
+            <p className="font-space-mono text-sm text-coffee-700/80">
               {t("contactPage.formComingSoon")}
             </p>
           </div>

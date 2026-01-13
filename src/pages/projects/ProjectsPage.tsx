@@ -11,18 +11,22 @@ import { useTranslation } from "react-i18next";
 export default function ProjectsPage() {
   const { t } = useTranslation();
   return (
-    <section className="min-h-screen bg-coffee-900 text-seashell-100">
-      <div className="layout-grid py-24">
+    <section className="min-h-screen bg-neutral-950 text-seashell-100">
+      <div className="layout-grid grid grid-cols-12 gap-4 md:gap-6 py-24">
         <div className="col-span-12 md:col-span-6">
-          <h1 className="font-antonio text-5xl md:text-7xl text-avocado-400 text-glow lowercase">
+          <h1 className="font-urbanist text-5xl md:text-7xl text-avocado-400 text-glow lowercase">
             {t("projectsPage.heading")}
           </h1>
-          <p className="mt-6 max-w-xl text-seashell-200/80 font-mono text-sm">
+          <p className="mt-6 max-w-xl text-seashell-200/80 font-space-mono text-sm">
             {t("projectsPage.body")}
           </p>
         </div>
         <div className="col-span-12 md:col-span-6">
-          {/* TODO: add GSAP timelines and light controls here */}
+          <div className="mb-8">
+            <h2 className="font-urbanist text-3xl text-avocado-400 text-glow lowercase mb-4">
+              KNSSD
+            </h2>
+          </div>
         </div>
       </div>
     </section>

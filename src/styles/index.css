@@ -6,14 +6,180 @@
 * This source code is licensed under the BSD-style license found in the
 * LICENSE file in the root directory of this source tree. */
 
-@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=DM+Serif+Display:ital@0;1&display=swap");
-
 /* monospace */
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+/* Urbanist (sans-serif) */
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Light.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Book.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Demibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Heavy.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-LightOblique.woff2") format("woff2");
+  font-weight: 200;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-BookOblique.woff2") format("woff2");
+  font-weight: 300;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Oblique.woff2") format("woff2");
+  font-weight: 400;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Medium-oblique.woff") format("woff");
+  font-weight: 500;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-Demibold-oblique.woff") format("woff");
+  font-weight: 600;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-BoldOblique.woff2") format("woff2");
+  font-weight: 700;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-ExtraBoldOblique.woff2") format("woff2");
+  font-weight: 800;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../assets/fonts/FuturaLT-HeavyOblique.woff2") format("woff2");
+  font-weight: 900;
+  font-style: oblique;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura Condensed";
+  src: url("../assets/fonts/FuturaLT-CondensedLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura Condensed";
+  src: url("../assets/fonts/FuturaLT-Condensed.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura Condensed";
+  src: url("../assets/fonts/FuturaLT-CondensedBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura Condensed";
+  src: url("../assets/fonts/FuturaLT-CondensedExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
+  /* Breakpoints (Tailwind v4 CSS-first config)
+     Change `md:` from 768px to 1024px. */
+  --breakpoint-md: 64rem;
+
   /* Seashell (light neutral) */
   --color-seashell-50: #fef9f4;
   --color-seashell-100: #fdf2ea;
@@ -74,31 +240,20 @@
   --color-avocado-800: #495d1f;
   --color-avocado-900: #374616;
 
-  --font-antonio: "Antonio", "sans-serif";
-  --font-DM: "DM Serif Display", serif;
+  --font-space-mono: "Space Mono", monospace;
+  --font-urbanist: "Urbanist", sans-serif;
+  --font-futura: "Futura", sans-serif;
+  --font-futura-condensed: "Futura Condensed", sans-serif;
 }
 
 @layer utilities {
   .layout-grid {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1rem;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
-  }
-
-  .bg-pattern-colorable {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M11 0l5 20H6l5-20zm42 31a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM0 72h40v4H0v-4zm0-8h31v4H0v-4zm20-16h20v4H20v-4zM0 56h40v4H0v-4zm63-25a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM53 41a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-30 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-28-8a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zM56 5a5 5 0 0 0-10 0h10zm10 0a5 5 0 0 1-10 0h10zm-3 46a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm10 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM21 0l5 20H16l5-20zm43 64v-4h-4v4h-4v4h4v4h4v-4h4v-4h-4zM36 13h4v4h-4v-4zm4 4h4v4h-4v-4zm-4 4h4v4h-4v-4zm8-8h4v4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E");
-  }
-
-  .drop-shadow-glow {
-    --tw-drop-shadow: drop-shadow(0 0 25px currentColor);
-    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
-      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
-      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
   }
 
   .text-glow {
@@ -109,13 +264,24 @@
       0 0 40px currentColor;
   }
 
-  .no-transition {
-    transition: none !important;
+  .glow-seashell {
+    text-shadow:
+      0 0 6px #f2cbad,
+      0 0 18px #eeae8d,
+      0 0 36px #db9471;
+    filter: drop-shadow(0 0 18px rgba(238, 174, 141, 0.6));
   }
 
-  @media (min-width: 768px) {
+  .glow-avocado {
+    text-shadow:
+      0 0 6px #a2cf64,
+      0 0 18px #89b83e,
+      0 0 36px #709731;
+    filter: drop-shadow(0 0 18px rgba(137, 184, 62, 0.6));
+  }
+
+  @media (min-width: 1024px) {
     .layout-grid {
-      gap: 1.5rem;
       padding-left: 2rem;
       padding-right: 2rem;
       max-width: 85%;
@@ -141,32 +307,4 @@
 body {
   @apply bg-seashell-100 text-coffee-900 font-sans;
   overflow: hidden;
-}
-
-@keyframes slide-in-from-top {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-in-from-top {
-  animation: slide-in-from-top 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out forwards;
 }

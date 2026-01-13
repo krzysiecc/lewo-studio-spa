@@ -33,7 +33,7 @@ export default function MenuButton({ isOpen, onClick }: MenuButtonProps) {
         </div>
 
         {/* Middle Line */}
-        <div className="relative w-[4px] md:w-[6px] h-full bg-current/50"></div>
+        <div className="relative w-[4px] md:w-[6px] h-full bg-current/30"></div>
 
         {/* Right Line */}
         <div className="relative w-[4px] md:w-[6px] h-full bg-current">

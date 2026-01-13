@@ -1,3 +1,5 @@
+// eslint.config.js
+
 // Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //

@@ -118,7 +118,8 @@ export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
       >
         <LogoMain
           ref={logoRef}
-          className="ml-2 w-15 md:w-25 h-auto text-coffee-900 pointer-events-auto transition-all ease-in-out"
+          className="ml-2 w-15 md:w-30 h-auto text-coffee-900 pointer-events-auto transition-all ease-in-out"
+          color={headerColor}
         />
 
         <div

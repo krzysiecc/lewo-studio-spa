@@ -1,0 +1,23 @@
+{
+  "header": {
+    "title": "BRANDING DLA KOŁA NAUKOWEGO",
+    "date": "GRUDZIEŃ 2025",
+    "nav": {
+      "brief": "BRIEF",
+      "variations": "WARIACJE",
+      "palette": "PALETA",
+      "fonts": "FONTY",
+      "mockups": "MOCKUPY"
+    }
+  },
+  "brief": {
+    "text": "KNSSD TO STUDENCKA INICJATYWA SKUPIONA NA TWORZENIU PROJEKTÓW Z SEKCJI GAMEDEV'U. DZIAŁA JAKO PRZESTRZEŃ DO ROZWIJANIA KREATYWNOŚCI, PRACY W ZESPOŁACH PROJEKTOWYCH ORAZ ZDOBYWANIA DOŚWIADCZENIA W PROCESIE PRODUKCJI GIER - OD KONCEPCJI PO GOTOWY PRODUKT!"
+  },
+  "titles": {
+    "variations": "WARIACJE",
+    "coin": "ANIMACJA",
+    "palette": "PALETA",
+    "fonts": "FONTY",
+    "mockups": "MOCKUPY"
+  }
+}
