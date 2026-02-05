@@ -74,8 +74,8 @@ export default function LanguageSwitcher() {
       onMouseEnter={handleMouseEnter} // Add mouse enter event
       onMouseLeave={handleMouseLeave} // Add mouse leave event
       className="
-        font-urbanist font-medium text-xl md:text-3xl
-        h-10 w-12 // Larger size
+        font-urbanist font-light  md:text-3xl
+        h-7 w-4 md:w-12
         flex items-center justify-center 
         overflow-hidden 
         cursor-pointer

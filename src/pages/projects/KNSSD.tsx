@@ -1,20 +1,31 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 // src/pages/projects/KNSSD.tsx
 
-// Copyright (c) 2026, Krzysztof Wiłnicki
+// copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //
 // This source code is licensed under the BSD-style license found in the
 // LICENSE file in the root directory of this source tree.
 
-import type { RefObject } from "react";
-import { useLayoutEffect, useRef } from "react";
+import React, {
+  type RefObject,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation, Trans } from "react-i18next";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+  AnimatePresence,
+} from "framer-motion";
 import AnimatedText from "@/components/effects/AnimatedText";
 import ImageSequence from "@/components/ImageSequence";
-import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack";
+import LogoLoop from "@/components/LogoLoop";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -92,8 +103,199 @@ const PatternSVG = () => (
   </svg>
 );
 
+type AnimatedPart = string | React.ReactElement<{ children?: React.ReactNode }>;
+
+interface ScrollWordProps {
+  part: AnimatedPart;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  wordKey: string;
+}
+
+function ScrollWord({
+  part,
+  index,
+  total,
+  progress,
+  wordKey,
+}: ScrollWordProps) {
+  const step = total > 0 ? 1 / total : 1;
+  const start = index * step;
+  const end = Math.min(1, start + step);
+  const opacity = useTransform(progress, [start, end], [0.3, 1]);
+  const x = useTransform(progress, [start, end], [-18, 0]);
+  const style = { opacity, x };
+
+  if (typeof part === "string") {
+    return (
+      <motion.span
+        key={wordKey}
+        className="inline-block mr-2 leading-tight"
+        style={style}
+      >
+        {part}
+      </motion.span>
+    );
+  }
+
+  return (
+    <motion.span
+      key={wordKey}
+      className="inline-block mr-2 leading-tight"
+      style={style}
+    >
+      {part}
+    </motion.span>
+  );
+}
+
+/**
+ * AnimatedWords (top-level)
+ * - Safely handles React children (elements or strings)
+ * - Splits string children into words
+ * - Generates deterministic keys based on content occurrence counts (avoids using array index)
+ */
+export function AnimatedWords({ children }: { children?: React.ReactNode }) {
+  const parts: AnimatedPart[] = [];
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.8", "end 0.45"],
+  });
+
+  // eslint-disable-next-line react-x/no-children-for-each
+  React.Children.forEach(children, (node) => {
+    if (typeof node === "string") {
+      parts.push(...node.split(" "));
+      return;
+    }
+
+    if (typeof node === "number" || typeof node === "bigint") {
+      parts.push(String(node));
+      return;
+    }
+
+    if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+      parts.push(node);
+    }
+  });
+
+  const counts = new Map<string, number>();
+
+  return (
+    <motion.span ref={containerRef} className="inline-block">
+      {parts.map((part, index) => {
+        const baseKey =
+          typeof part === "string"
+            ? part.trim() || "empty"
+            : (() => {
+                const typeName =
+                  typeof part.type === "string"
+                    ? part.type
+                    : (() => {
+                        const typeRecord = part.type as unknown as Record<
+                          string,
+                          unknown
+                        >;
+                        const displayName =
+                          typeof typeRecord.displayName === "string"
+                            ? typeRecord.displayName
+                            : undefined;
+                        const name =
+                          typeof typeRecord.name === "string"
+                            ? typeRecord.name
+                            : undefined;
+                        return displayName ?? name ?? "element";
+                      })();
+
+                const childrenValue = part.props?.children;
+                const childrenKey =
+                  typeof childrenValue === "string" ||
+                  typeof childrenValue === "number" ||
+                  typeof childrenValue === "bigint"
+                    ? String(childrenValue)
+                    : "";
+
+                return `${part.key ?? typeName}-${childrenKey}`;
+              })();
+        const occurrence = (counts.get(baseKey) ?? 0) + 1;
+        counts.set(baseKey, occurrence);
+        const key = `${baseKey}_${occurrence}`;
+
+        return (
+          <ScrollWord
+            key={key}
+            part={part}
+            index={index}
+            total={parts.length}
+            progress={scrollYProgress}
+            wordKey={key}
+          />
+        );
+      })}
+    </motion.span>
+  );
+}
+
 export default function ProjectKNSSD() {
   const { t } = useTranslation("knssd");
+  const [, setHoveredHex] = useState<string | null>(null);
+  const [showToast, setShowToast] = useState(false);
+
+  function hexToRgb(hex: string | null) {
+    if (!hex) return "";
+    const clean = hex.replace(/^#/, "");
+    const r = parseInt(clean.substring(0, 2), 16);
+    const g = parseInt(clean.substring(2, 4), 16);
+    const b = parseInt(clean.substring(4, 6), 16);
+    return `RGB ${r}, ${g}, ${b}`;
+  }
+
+  function hexToCmyk(hex: string | null) {
+    if (!hex) return "";
+    let c = 0;
+    let m = 0;
+    let y = 0;
+    let k = 0;
+
+    const clean = hex.replace(/^#/, "");
+    const r = parseInt(clean.substring(0, 2), 16);
+    const g = parseInt(clean.substring(2, 4), 16);
+    const b = parseInt(clean.substring(4, 6), 16);
+
+    // BLACK
+    if (r === 0 && g === 0 && b === 0) {
+      k = 1;
+      return `CMYK 0, 0, 0, 100`;
+    }
+
+    c = 1 - r / 255;
+    m = 1 - g / 255;
+    y = 1 - b / 255;
+
+    const minCMY = Math.min(c, Math.min(m, y));
+
+    c = (c - minCMY) / (1 - minCMY);
+    m = (m - minCMY) / (1 - minCMY);
+    y = (y - minCMY) / (1 - minCMY);
+    k = minCMY;
+
+    return `CMYK ${Math.round(c * 100)}, ${Math.round(m * 100)}, ${Math.round(y * 100)}, ${Math.round(k * 100)}`;
+  }
+
+  async function copyToClipboard(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      // ignore failures silently
+    }
+  }
+
+  // AnimatedWords (and variants) have been moved to the top-level to avoid nested component definitions.
   const containerRef = useRef<HTMLDivElement>(null);
 
   // --- REFS ---
@@ -101,6 +303,60 @@ export default function ProjectKNSSD() {
   const patternRef = useRef<HTMLDivElement>(null);
   const folderSectionRef = useRef<HTMLDivElement>(null); // This acts as the Trigger/Pin
   const coinSectionRef = useRef<HTMLDivElement>(null);
+
+  // We define the cards for the LogoLoop here to preserve the background colors
+  // from the previous ScrollStack implementation, ensuring visibility of white logos.
+  const logoVariations = [
+    {
+      node: (
+        <div className="flex items-center justify-center px-8">
+          <img
+            src="/assets/knssd/LOGO_PODSTAWOWE_MONO.png"
+            alt="Logo Podstawowe Mono"
+            className="h-12 w-auto object-contain brightness-0 opacity-60 transition-opacity duration-300 hover:opacity-100"
+          />
+        </div>
+      ),
+      title: "Podstawowe Mono",
+    },
+    {
+      node: (
+        <div className="flex items-center justify-center px-8">
+          <img
+            src="/assets/knssd/LOGO_PODSTAWOWE_KOLOR.png"
+            alt="Logo Podstawowe Kolor"
+            className="h-12 w-auto object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
+          />
+        </div>
+      ),
+      title: "Podstawowe Kolor",
+    },
+    {
+      node: (
+        <div className="flex items-center justify-center px-8">
+          {/* Added invert to ensure visibility if the image is white-text-only */}
+          <img
+            src="/assets/knssd/LOGO_DODATKOWE_MONO.png"
+            alt="Logo Dodatkowe Mono"
+            className="h-12 w-auto object-contain brightness-0 opacity-60 transition-opacity duration-300 hover:opacity-100"
+          />
+        </div>
+      ),
+      title: "Dodatkowe Mono",
+    },
+    {
+      node: (
+        <div className="flex items-center justify-center px-8">
+          <img
+            src="/assets/knssd/LOGO_DODATKOWE_KOLOR.png"
+            alt="Logo Dodatkowe Kolor"
+            className="h-12 w-auto object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
+          />
+        </div>
+      ),
+      title: "Dodatkowe Kolor",
+    },
+  ];
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -119,64 +375,43 @@ export default function ProjectKNSSD() {
       headerTl.fromTo(
         patternRef.current,
         { clipPath: "inset(45% 10% 45% 85%)", opacity: 1 },
-        { clipPath: "inset(0% 0% 0% 50%)", ease: "power2.out", duration: 1 }
+        { clipPath: "inset(0% 0% 0% 50%)", ease: "power2.out", duration: 1 },
       );
-
-      // 2. FOLDERS / VARIATIONS (The Scroll Stack)
-      // Get all cards within the container context
-      const cards = gsap.utils.toArray<HTMLElement>(".scroll-stack-card");
-      const spacer = 40; // Pixel gap between stacked cards at the top
-
-      // A. Initial Setup: Position cards off-screen/down
-      // We space them out vertically to simulate a long list
-      gsap.set(cards, {
-        y: (i) => i * 350 + 100, // Distance between cards before they stack
-        scale: 1,
-        zIndex: (i) => cards.length - i, // Reverse z-index so first is on top
-        filter: "blur(0px)",
-      });
-
-      // B. The Master Timeline
-      const stackTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: folderSectionRef.current,
-          start: "top top", // Pin immediately
-          end: `+=${cards.length * 100}%`, // Scroll distance based on card count
-          scrub: 1,
-          pin: true,
-          // markers: true, // debug if needed
-        },
-      });
-
-      // C. The Animation Loop
-      cards.forEach((card, i) => {
-        // 1. Animate the current card moving UP to the stack position
-        stackTl.to(card, {
-          y: i * spacer, // Final stacked position (staggered slightly)
-          ease: "none",
-          duration: 1,
-        });
-
-        // 2. If there is a previous card, shrink/blur it as this one arrives
-        if (i > 0) {
-          const prevCard = cards[i - 1];
-          // We insert this animation slightly before the current card finishes arriving
-          stackTl.to(
-            prevCard,
-            {
-              scale: 0.9, // Scale down the card underneath
-              filter: "blur(4px)", // Blur the card underneath
-              duration: 1,
-              ease: "none",
-            },
-            "<" // Run at start of previous tween
-          );
-        }
-      });
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
+
+  // Helper for rendering the swatch content
+  const renderSwatchContent = (hex: string, textColor: string) => {
+    return (
+      <div
+        className={`flex h-full w-full flex-col items-center justify-center space-y-2 text-center font-space-mono text-xs md:text-sm font-bold opacity-0 transition-opacity duration-300 hover:opacity-100 ${textColor}`}
+      >
+        <button
+          type="button"
+          onClick={() => copyToClipboard(hexToCmyk(hex))}
+          className="cursor-pointer hover:underline"
+        >
+          {hexToCmyk(hex)}
+        </button>
+        <button
+          type="button"
+          onClick={() => copyToClipboard(hexToRgb(hex))}
+          className="cursor-pointer hover:underline"
+        >
+          {hexToRgb(hex)}
+        </button>
+        <button
+          type="button"
+          onClick={() => copyToClipboard(hex)}
+          className="cursor-pointer hover:underline uppercase"
+        >
+          {hex}
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -213,7 +448,7 @@ export default function ProjectKNSSD() {
         {/* PATTERN CONTAINER 
            1. We make it FULL SCREEN (absolute inset-0).
            2. z-index: 10 ensures it covers the white bg but stays under text if you want, 
-              or z-index: 30 if you want it to cover the text too.
+             or z-index: 30 if you want it to cover the text too.
            3. We rely on GSAP clip-path to hide/show it.
         */}
 
@@ -227,8 +462,8 @@ export default function ProjectKNSSD() {
         </div>
       </section>
 
-      <div className="collapse md:visible md:sticky top-0 z-[60] pointer-events-none bg-bluepowder-100 backdrop-blur supports-[backdrop-filter]:bg-bluepowder-100/70">
-        <div className="mx-auto w-full max-w-5xl px-4 md:px-12 py-6 md:py-11 pointer-events-none">
+      <div className="collapse md:visible md:sticky top-0 z-[60] pointer-events-none bg-[#A895FF] backdrop-blur supports-[backdrop-filter]:bg-[#A895FF]/70">
+        <div className="mx-auto w-full max-w-5xl px-4 md:px-12 py-6 md:py-12 pointer-events-none">
           <nav aria-label="KNSSD sections">
             <ul className="pointer-events-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-urbanist font-bold uppercase tracking-[0.2em] text-[0.5vw] md:text-[1.2vw]">
               {(
@@ -245,14 +480,16 @@ export default function ProjectKNSSD() {
                     href={`#${item.id}`}
                     className="group inline-flex items-baseline gap-2 text-black/70 hover:text-black"
                   >
-                    <span className="relative">
-                      <span className="border-b border-transparent group-hover:border-black/60 transition-colors">
-                        {item.label}
+                    <AnimatedText text={item.label} el="span">
+                      <span className="relative mr-1">
+                        <span className="border-b border-transparent group-hover:border-black/60 transition-colors">
+                          {item.label}
+                        </span>
                       </span>
-                    </span>
-                    <sup className="text-[10px] md:text-[11px] leading-none text-bluepowder-900/60">
-                      {(idx + 1).toString().padStart(2, "0")}
-                    </sup>
+                      <sup className="text-[10px] md:text-[11px] leading-none text-bluepowder-900/60">
+                        {(idx + 1).toString().padStart(2, "0")}
+                      </sup>
+                    </AnimatedText>
                   </a>
                 </li>
               ))}
@@ -267,79 +504,45 @@ export default function ProjectKNSSD() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 10, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 2.0, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-6xl font-futura-condensed font-extrabold uppercase leading-tight">
-              <Trans
-                i18nKey="brief.text"
-                ns="knssd"
-                components={{ highlight: <span className="text-purple-400" /> }}
-              />
-            </h2>
+            {/* Use Trans with a replacement component so language changes re-render correctly */}
+            <motion.h2 className="text-3xl md:text-6xl font-futura-condensed font-extrabold uppercase leading-tight">
+              <AnimatedText text={t("brief.text")} el="span">
+                <Trans
+                  i18nKey="brief.text"
+                  ns="knssd"
+                  components={[<AnimatedWords key="animated-words" />]}
+                />
+              </AnimatedText>
+            </motion.h2>
           </motion.div>
         </div>
       </section>
 
-      {/* ================= SECTION 2: VARIATIONS (Scroll Stack) ================= */}
+      {/* ================= SECTION 2: VARIATIONS (Logo Loop) ================= */}
       <section
         ref={folderSectionRef}
         id="variations"
-        className="w-full h-screen bg-white flex flex-col items-center justify-center relative overflow-hidden"
+        className="w-full bg-white relative py-32"
       >
-        <div className="absolute top-12 left-12 z-10">
-          <h3 className="text-4xl font-bold uppercase">
-            {t("titles.variations")}
-          </h3>
+        <div className="w-[80%] mx-auto">
+          <LogoLoop
+            logos={logoVariations}
+            speed={60} // Standard comfortable reading speed
+            direction="left" // Flows right to left
+            logoHeight={48} // 48px is a standard tech logo height
+            gap={0} // Gap handled by padding in the node for better centering
+            hoverSpeed={0} // Pauses on hover
+            scaleOnHover={false} // Clean tech look usually doesn't scale
+            fadeOut
+            fadeOutColor="#ffffff"
+            ariaLabel="KNSSD Logo Variations"
+          />
         </div>
-
-        {/* The Component is now just a container, controlled by the GSAP timeline above */}
-        <ScrollStack>
-          <ScrollStackItem>
-            <div className="flex flex-col h-full justify-between">
-              <h2 className="text-4xl font-bold text-bluepowder-200">01</h2>
-              <img
-                src="/assets/knssd/LOGO_PODSTAWOWE_MONO.png"
-                alt="Logo Variation 1"
-                className="w-256 h-auto mt-1"
-              />
-            </div>
-          </ScrollStackItem>
-
-          <ScrollStackItem itemClassName="bg-bluepowder-100">
-            <div className="flex flex-col h-full justify-between">
-              <h2 className="text-4xl font-bold text-bluepowder-500">02</h2>
-              <img
-                src="/assets/knssd/LOGO_PODSTAWOWE_KOLOR.png"
-                alt="Logo Variation 1"
-                className="w-256 h-auto mt-1"
-              />
-            </div>
-          </ScrollStackItem>
-
-          <ScrollStackItem itemClassName="bg-gray-900 text-white">
-            <div className="flex flex-col h-full justify-between">
-              <h2 className="text-4xl font-bold text-bluepowder-700">03</h2>
-              <img
-                src="/assets/knssd/LOGO_DODATKOWE_MONO.png"
-                alt="Logo Variation 1"
-                className="w-256 h-auto mt-1"
-              />
-            </div>
-          </ScrollStackItem>
-          <ScrollStackItem itemClassName="bg-gray-900 text-white">
-            <div className="flex flex-col h-full justify-between">
-              <h2 className="text-4xl font-bold text-bluepowder-900">04</h2>
-              <img
-                src="/assets/knssd/LOGO_DODATKOWE_KOLOR.png"
-                alt="Logo Variation 1"
-                className="w-256 h-auto mt-1"
-              />
-            </div>
-          </ScrollStackItem>
-        </ScrollStack>
       </section>
 
       {/* ================= SECTION: COIN ================= */}
@@ -349,16 +552,16 @@ export default function ProjectKNSSD() {
         className="w-full h-[300vh] bg-white relative flex items-start justify-center"
       >
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center">
-          <AnimatedText
+          {/* <AnimatedText
             text={t("titles.coin")}
             el="h3"
             className="text-4xl md:text-6xl font-black uppercase mb-8 z-10"
           >
             {t("titles.coin")}
-          </AnimatedText>
+          </AnimatedText> */}
 
           {/* New Component Usage */}
-          <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
+          <div className="relative w-[300px] h-[300px] md:w-[700px] md:h-[700px]">
             <ImageSequence
               triggerRef={coinSectionRef as RefObject<HTMLElement>}
               folderPath="/assets/knssd/coin"
@@ -374,49 +577,114 @@ export default function ProjectKNSSD() {
       {/* ... Palette, Fonts, Mockups ... */}
       <section
         id="palette"
-        className="py-32 px-4 md:px-12 bg-gray-50 border-t border-black scroll-mt-32"
+        className="py-32 px-20 md:px-50 bg-gray-50 border-t border-black scroll-mt-32"
       >
         <h3 className="text-4xl md:text-6xl font-black uppercase mb-16">
           {t("titles.palette")}
         </h3>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 h-[400px]">
-          <div className="bg-[#0b1221] rounded-2xl w-full h-full border border-black"></div>
-          <div className="bg-[#9ba1ff] rounded-2xl w-full h-full border border-black"></div>
-          <div className="bg-[#8cebb6] rounded-2xl w-full h-full border border-black"></div>
+          {/* Card 1 */}
+          <div
+            className="relative bg-[#0b1221] rounded-2xl w-full h-full border border-black overflow-hidden flex items-center justify-center"
+            onMouseEnter={() => setHoveredHex("#0b1221")}
+            onMouseLeave={() => setHoveredHex(null)}
+          >
+            {renderSwatchContent("#0b1221", "text-[#4B9D69]")}
+          </div>
+
+          {/* Card 2 */}
+          <div
+            className="relative bg-[#9ba1ff] rounded-2xl w-full h-full border border-black overflow-hidden flex items-center justify-center"
+            onMouseEnter={() => setHoveredHex("#9ba1ff")}
+            onMouseLeave={() => setHoveredHex(null)}
+          >
+            {renderSwatchContent("#9ba1ff", "text-[#01020B]")}
+          </div>
+
+          {/* Card 3 */}
+          <div
+            className="relative bg-[#8cebb6] rounded-2xl w-full h-full border border-black overflow-hidden flex items-center justify-center"
+            onMouseEnter={() => setHoveredHex("#8cebb6")}
+            onMouseLeave={() => setHoveredHex(null)}
+          >
+            {renderSwatchContent("#8cebb6", "text-[#240FCA]")}
+          </div>
+
+          {/* Card 4 (Split) */}
           <div className="rounded-2xl w-full h-full border border-black overflow-hidden flex flex-col">
-            <div className="h-1/2 bg-[#6b4cfa]"></div>
-            <div className="h-1/2 bg-[#d599ff]"></div>
+            <div
+              className="relative h-1/2 bg-[#6b4cfa] flex items-center justify-center overflow-hidden"
+              onMouseEnter={() => setHoveredHex("#6b4cfa")}
+              onMouseLeave={() => setHoveredHex(null)}
+            >
+              {renderSwatchContent("#6b4cfa", "text-[#9ba1ff]")}
+            </div>
+            <div
+              className="relative h-1/2 bg-[#d599ff] flex items-center justify-center overflow-hidden"
+              onMouseEnter={() => setHoveredHex("#d599ff")}
+              onMouseLeave={() => setHoveredHex(null)}
+            >
+              {renderSwatchContent("#d599ff", "text-[#240FCA]")}
+            </div>
           </div>
         </div>
       </section>
+
       <section
         id="fonts"
-        className="py-24 px-4 bg-white flex flex-col items-center scroll-mt-32"
+        className="py-24 px-20 md:px-50 bg-white flex flex-col scroll-mt-32"
       >
-        <h3 className="text-4xl md:text-6xl font-black uppercase mb-12 self-start md:ml-12">
+        <AnimatedText
+          text={t("titles.fonts")}
+          el="h3"
+          className="text-4xl md:text-6xl font-black uppercase mb-8 z-10"
+        >
           {t("titles.fonts")}
-        </h3>
-        <div className="max-w-5xl w-full">
+        </AnimatedText>
+        <div className="max-w-5xl w-full flex-1/2 mx-auto">
           <img
-            src="/assets/knssd/fonts-preview.png"
+            src="/assets/knssd/fonts.png"
             alt="Typography Showcase"
             className="w-full h-auto object-contain"
           />
         </div>
       </section>
-      <section
+      {/* <section
         id="mockups"
-        className="py-32 px-4 md:px-12 bg-[#e5e5e5] scroll-mt-32"
+        className="py-32 px-20 md:px-50 bg-[#e5e5e5] scroll-mt-32"
       >
-        <h3 className="text-4xl md:text-6xl font-black uppercase mb-16">
+        <AnimatedText
+          text={t("titles.mockups")}
+          el="h3"
+          className="text-4xl md:text-6xl font-black uppercase mb-8 z-10"
+        >
           {t("titles.mockups")}
-        </h3>
+        </AnimatedText>
         <div className="w-full min-h-[600px] border-2 border-dashed border-gray-400 flex items-center justify-center">
           <p className="text-gray-600 font-space-mono text-xl">
             [ React Bits Component: Photo Gallery ]
           </p>
         </div>
-      </section>
+      </section> */}
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {showToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] pointer-events-none"
+          >
+            <div className="bg-[#bcbcbc] text-black px-4 py-2 rounded-sm text-sm font-space-mono lowercase shadow-md">
+              <AnimatedText text={t("utils.copied", { ns: "knssd" })} el="h3">
+                {t("utils.copied", { ns: "knssd" })}
+              </AnimatedText>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

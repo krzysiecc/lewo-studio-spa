@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "BRANDING FOR STUDENT SCIENTIFIC CIRCLE",
+    "title": "BRANDING FOR STUDENT ORG SSD ",
     "date": "DECEMBER 2025",
     "nav": {
       "brief": "BRIEF",
@@ -11,7 +11,7 @@
     }
   },
   "brief": {
-    "text": "KNSSD IS A STUDENT INITIATIVE FOCUSED ON GAMEDEV, ACTING AS A SPACE FOR CREATIVITY, TEAMWORK, AND GAINING EXPERIENCE IN GAME PRODUCTION FROM CONCEPT TO LAUNCH!"
+    "text": "<0>KNSSD IS A STUDENT INITIATIVE FOCUSED ON GAMEDEV, ACTING AS A SPACE FOR CREATIVITY, TEAMWORK, AND GAINING EXPERIENCE IN GAME PRODUCTION FROM CONCEPT TO LAUNCH!</0>"
   },
   "titles": {
     "variations": "VARIATIONS",
@@ -19,5 +19,8 @@
     "palette": "PALETTE",
     "fonts": "FONTS",
     "mockups": "MOCKUPS"
+  },
+  "utils": {
+    "copied": "copied to clipboard"
   }
 }

@@ -89,7 +89,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
 
   const [containerWidth, setContainerWidth] = useState(0);
   const [, setWindowWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 0
+    typeof window !== "undefined" ? window.innerWidth : 0,
   );
   const [buttonsReady, setButtonsReady] = useState(false);
   const [endpointsReady, setEndpointsReady] = useState(false);
@@ -118,7 +118,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
         icon: "contact" as const,
       },
     ],
-    []
+    [],
   );
 
   const leftEndpoints = useMemo(
@@ -127,7 +127,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
       { xPct: 0.33, yPct: 0.33, yOffsetPx: 0 },
       { xPct: 0.33, yPct: 0.47, yOffsetPx: 0 },
     ],
-    []
+    [],
   );
 
   const leftIcons = useMemo(
@@ -136,7 +136,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
       { xPct: 0.32, yPct: 0.83, yOffsetPx: 0, Icon: LayoutGrid },
       { xPct: 0.39, yPct: 0.83, yOffsetPx: 0, Icon: Mail },
     ],
-    []
+    [],
   );
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -356,7 +356,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
             repeat: 3,
             yoyo: true,
           },
-          sequenceStartTime
+          sequenceStartTime,
         );
         tl.to(
           link,
@@ -367,7 +367,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
             duration: 0.5,
             ease: "expo.out",
           },
-          sequenceStartTime + 0.08 * 4
+          sequenceStartTime + 0.08 * 4,
         );
       });
     }, mainContainerRef);
@@ -394,12 +394,12 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
         filter: "blur(10px)",
         duration: 0.4,
         ease: "power2.in",
-      }
+      },
     );
     exitTimeline.to(
       mainContainerRef.current,
       { opacity: 0, duration: 0.8, ease: "power2.inOut" },
-      "<"
+      "<",
     );
   };
 
@@ -495,6 +495,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
             const isActive = activeIndex === index;
             return (
               <div
+                // eslint-disable-next-line react-x/no-array-index-key
                 key={`left-icon-${index}`}
                 style={{
                   position: "absolute",
@@ -533,7 +534,7 @@ const MenuOverlay = ({ onClose, ref }: MenuOverlayProps) => {
                         buttonRefs.current[index] = el;
                         if (el && !buttonsReady) {
                           const allReady = buttonRefs.current.every(
-                            (btn, i) => i > index || btn !== null
+                            (btn, i) => i > index || btn !== null,
                           );
                           if (
                             allReady &&

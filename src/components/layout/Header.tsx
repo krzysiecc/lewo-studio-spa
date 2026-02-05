@@ -11,6 +11,7 @@ import MenuOverlay, { type MenuOverlayRef } from "./MenuOverlay";
 import MenuButton from "./MenuButton";
 import LogoMain from "../../utils/misc/LogoMain";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useNavigate } from "react-router-dom";
 
 import gsap from "gsap";
 import { ANIMATION_CONSTANTS } from "../../constants/animations";
@@ -21,52 +22,13 @@ interface HeaderProps {
 }
 
 export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
+  const navigate = useNavigate();
+
   const menuRef = useRef<MenuOverlayRef>(null);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<SVGSVGElement>(null);
   const buttonWrapperRef = useRef<HTMLDivElement>(null);
-  const headerColor = "#281d15";
-
-  // Detect background color beneath header
-  //   useEffect(() => {
-  //     const header = headerRef.current;
-  //     if (!header) return;
-
-  //     const detectBackgroundColor = () => {
-  //       const headerRect = header.getBoundingClientRect();
-  //       const centerX = headerRect.left + headerRect.width / 2;
-  //       const centerY = headerRect.top + headerRect.height / 2;
-
-  //       // Get element beneath header center
-  //       const elementBelow = document.elementFromPoint(centerX, centerY + 50);
-  //       if (!elementBelow) return;
-
-  //       const computedStyle = window.getComputedStyle(elementBelow);
-  //       const bgColor = computedStyle.backgroundColor;
-
-  //       // Parse RGB and determine if light or dark
-  //       const rgb = bgColor.match(/\d+/g);
-  //       if (rgb && rgb.length >= 3) {
-  //         const r = parseInt(rgb[0]);
-  //         const g = parseInt(rgb[1]);
-  //         const b = parseInt(rgb[2]);
-  //         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-
-  //         // If background is light, use dark text; if dark, use light text
-  //         setHeaderColor(brightness > 128 ? "#281d15" : "#fdf2ea");
-  //       }
-  //     };
-
-  //     detectBackgroundColor();
-
-  //     // Re-detect on scroll
-  //     const handleScroll = () => {
-  //       detectBackgroundColor();
-  //     };
-
-  //     window.addEventListener("scroll", handleScroll, { passive: true });
-  //     return () => window.removeEventListener("scroll", handleScroll);
-  //   }, []);
+  const headerColor = "#1a1a1a";
 
   useEffect(() => {
     const logoTarget = logoRef.current;
@@ -80,8 +42,8 @@ export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
     const allTargets = [logoTarget, buttonTargets];
 
     gsap.to(allTargets, {
-      color: isMenuOpen ? "#fdf2ea" : headerColor,
-      fill: isMenuOpen ? "#fdf2ea" : headerColor,
+      color: isMenuOpen ? "#fefefe" : headerColor,
+      fill: isMenuOpen ? "#fefefe" : headerColor,
       duration: 0,
       ease: "none",
       overwrite: "auto",
@@ -116,12 +78,13 @@ export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
         ref={headerRef}
         className="fixed top-0 right-0 w-full z-50 p-4 md:p-6 flex justify-between items-center"
       >
-        <LogoMain
-          ref={logoRef}
-          className="ml-2 w-15 md:w-30 h-auto text-coffee-900 pointer-events-auto transition-all ease-in-out"
-          color={headerColor}
-        />
-
+        <div onClick={() => void navigate("/")} className="cursor-pointer">
+          <LogoMain
+            ref={logoRef}
+            className="ml-5 w-12 md:w-20 h-auto text-[#1a1a1a] pointer-events-auto transition-all ease-in-out"
+            color={headerColor}
+          />
+        </div>
         <div
           ref={buttonWrapperRef}
           className="flex items-center gap-1 md:gap-4"

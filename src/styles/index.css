@@ -180,6 +180,9 @@
      Change `md:` from 768px to 1024px. */
   --breakpoint-md: 64rem;
 
+  /* Custom UI variables */
+  --magnet-lines-color: #000;
+
   /* Seashell (light neutral) */
   --color-seashell-50: #fef9f4;
   --color-seashell-100: #fdf2ea;
@@ -305,6 +308,6 @@
 }
 
 body {
-  @apply bg-seashell-100 text-coffee-900 font-sans;
+  @apply bg-white text-coffee-900 font-sans;
   overflow: hidden;
 }

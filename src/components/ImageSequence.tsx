@@ -123,6 +123,7 @@ const ImageSequence: React.FC<ImageSequenceProps> = ({
     }, containerRef);
 
     return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [folderPath, fileNamePrefix, frameCount, extension, digits, triggerRef]);
 
   return (

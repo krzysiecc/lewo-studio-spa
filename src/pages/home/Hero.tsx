@@ -12,6 +12,10 @@ import { useTranslation, Trans } from "react-i18next";
 
 import AnimatedText from "../../components/effects/AnimatedText";
 import { ANIMATION_CONSTANTS } from "../../constants/animations";
+import MagnetLines from "@/components/MagnetLines";
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+const MagnetLinesAny = MagnetLines as any;
 
 export default function Hero() {
   const bigNameRef = useRef<HTMLHeadingElement>(null);
@@ -62,7 +66,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="-z-10 relative min-h-screen bg-seashell-100 flex flex-col justify-between">
+    <section className="-z-10 relative min-h-[100vh] bg-white flex flex-col justify-between">
       {/* CENTERED MAIN BLOCK */}
       <div className="flex-grow flex items-center w-full">
         <div className="layout-grid grid grid-cols-12 gap-x-4 items-center">
@@ -70,7 +74,7 @@ export default function Hero() {
             {/* "lena" is in its own div. */}
             <div ref={bigNameRef} className="text-left">
               <h1
-                className="font-medium tracking-tight leading-none font-urbanist"
+                className="font-bold tracking-tight leading-none font-urbanist"
                 style={{
                   fontSize: "clamp(2.5rem, 7vw, 9rem)",
                   lineHeight: 0.8,
@@ -94,7 +98,7 @@ export default function Hero() {
               <span ref={smallNameRef}>
                 <AnimatedText
                   el="span"
-                  className="text-base md:text-lg font-normal tracking-wider text-coffee-900"
+                  className="text-base text-urbanist-400 md:text-lg tracking-wider text-coffee-900"
                   text={t("hero.subtitle")}
                 >
                   <Trans i18nKey={"hero.subtitle"} />
@@ -104,6 +108,16 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      <MagnetLinesAny
+        rows={1}
+        columns={25}
+        containerWidth="75%"
+        containerHeight="6vmin"
+        lineWidth="0.2vmin"
+        lineHeight="3vmin"
+        baseAngle={0}
+        style={{ margin: "1rem auto" }}
+      />
     </section>
   );
 }

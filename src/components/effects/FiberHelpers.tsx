@@ -110,7 +110,7 @@ export interface FiberBuilderConfig {
 }
 
 function resolveEndpointSource(
-  endpoint?: FiberBuilderConfig["from"] | FiberBuilderConfig["to"]
+  endpoint?: FiberBuilderConfig["from"] | FiberBuilderConfig["to"],
 ): FiberEndpointSource {
   if (!endpoint || endpoint.type === "point") {
     return { type: "point", point: endpoint?.point ?? { x: 0, y: 0 } };
@@ -307,7 +307,7 @@ export function createFiber(config: FiberBuilderConfig): FiberSpec {
  */
 export function createFibers(
   defaults: Partial<Omit<FiberBuilderConfig, "id">>,
-  fibers: FiberBuilderConfig[]
+  fibers: FiberBuilderConfig[],
 ): FiberSpec[] {
   return fibers.map((fiber) => createFiber({ ...defaults, ...fiber }));
 }
@@ -327,7 +327,7 @@ export function fiberBetween(
   id: string,
   from: React.RefObject<HTMLElement>,
   to: React.RefObject<HTMLElement>,
-  options: Partial<Omit<FiberBuilderConfig, "id" | "from" | "to">> = {}
+  options: Partial<Omit<FiberBuilderConfig, "id" | "from" | "to">> = {},
 ): FiberSpec {
   return createFiber({
     id,
@@ -352,7 +352,7 @@ export function fiberToAnchor(
   id: string,
   from: React.RefObject<HTMLElement>,
   toAnchor: { xPct: number; yPct: number },
-  options: Partial<Omit<FiberBuilderConfig, "id" | "from" | "to">> = {}
+  options: Partial<Omit<FiberBuilderConfig, "id" | "from" | "to">> = {},
 ): FiberSpec {
   return createFiber({
     id,
@@ -377,7 +377,7 @@ export function fiberFromAnchor(
   id: string,
   fromAnchor: { xPct: number; yPct: number },
   to: React.RefObject<HTMLElement>,
-  options: Partial<Omit<FiberBuilderConfig, "id" | "from" | "to">> = {}
+  options: Partial<Omit<FiberBuilderConfig, "id" | "from" | "to">> = {},
 ): FiberSpec {
   return createFiber({
     id,

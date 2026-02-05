@@ -111,7 +111,7 @@ function MyPage() {
       radiusPx: 80,
       toIcon: Target,
       isActive: hoveredFiber === "fiber2",
-    }
+    },
   );
 
   // Helper 3: Full control with createFiber

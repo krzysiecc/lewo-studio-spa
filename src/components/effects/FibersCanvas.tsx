@@ -156,7 +156,7 @@ function catmullRomToBezier(points: Point[], tension = 1) {
 function resolveEndpoint(
   containerEl: HTMLElement,
   source: FiberEndpointSource,
-  offset?: Point
+  offset?: Point,
 ): Point {
   const containerRect = containerEl.getBoundingClientRect();
 
@@ -223,7 +223,7 @@ function resolveEndpoint(
 function resolveDirection(
   start: Point,
   end: Point,
-  direction: FiberDirection
+  direction: FiberDirection,
 ): FiberDirection {
   if (direction !== "auto") return direction;
 
@@ -356,13 +356,13 @@ function makeFiberPath(params: {
 }
 
 function decorationIsButton(
-  d?: FiberEndpointDecoration
+  d?: FiberEndpointDecoration,
 ): d is Extract<FiberEndpointDecoration, { type: "button" }> {
   return !!d && d.type === "button";
 }
 
 function decorationIsIcon(
-  d?: FiberEndpointDecoration
+  d?: FiberEndpointDecoration,
 ): d is Extract<FiberEndpointDecoration, { type: "icon" }> {
   return !!d && d.type === "icon";
 }
@@ -382,7 +382,7 @@ export default function FibersCanvas(props: FibersCanvasProps) {
   const highlightRefs = useRef<Record<string, SVGPathElement | null>>({});
   const glowIconRefs = useRef<Record<string, SVGGElement | null>>({});
   const dashInitStateRef = useRef<Record<string, { d: string; len: number }>>(
-    {}
+    {},
   );
 
   const compute = useCallback(() => {
@@ -528,12 +528,12 @@ export default function FibersCanvas(props: FibersCanvasProps) {
       const inDur = clamp(
         IN_BASE * (Math.abs(currentDash - 0) / (len || 1)),
         minDur,
-        IN_BASE
+        IN_BASE,
       );
       const outDur = clamp(
         OUT_BASE * (Math.abs(len - currentDash) / (len || 1)),
         minDur,
-        OUT_BASE
+        OUT_BASE,
       );
 
       if (!isActive) {
@@ -565,7 +565,7 @@ export default function FibersCanvas(props: FibersCanvasProps) {
             duration: 0.22,
             ease: "power2.out",
           },
-          ">-0.06"
+          ">-0.06",
         );
 
         // End icon glow should "unglow" immediately when leaving.
@@ -579,7 +579,7 @@ export default function FibersCanvas(props: FibersCanvasProps) {
               ease: "power2.out",
               transformOrigin: "50% 50%",
             },
-            0
+            0,
           );
         }
         continue;
