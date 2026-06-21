@@ -7,7 +7,7 @@
 // LICENSE file in the root directory of this source tree.
 
 import { createContext } from "react";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 
 export const LenisContext = createContext<React.RefObject<Lenis | null> | null>(
   null,

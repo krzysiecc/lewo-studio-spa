@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 // src/pages/projects/KNSSD.tsx
 
 // copyright (c) 2026, Krzysztof Wiłnicki
@@ -289,8 +288,7 @@ export default function ProjectKNSSD() {
       await navigator.clipboard.writeText(text);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
+    } catch {
       // ignore failures silently
     }
   }
@@ -390,21 +388,21 @@ export default function ProjectKNSSD() {
       >
         <button
           type="button"
-          onClick={() => copyToClipboard(hexToCmyk(hex))}
+          onClick={() => void copyToClipboard(hexToCmyk(hex))}
           className="cursor-pointer hover:underline"
         >
           {hexToCmyk(hex)}
         </button>
         <button
           type="button"
-          onClick={() => copyToClipboard(hexToRgb(hex))}
+          onClick={() => void copyToClipboard(hexToRgb(hex))}
           className="cursor-pointer hover:underline"
         >
           {hexToRgb(hex)}
         </button>
         <button
           type="button"
-          onClick={() => copyToClipboard(hex)}
+          onClick={() => void copyToClipboard(hex)}
           className="cursor-pointer hover:underline uppercase"
         >
           {hex}
