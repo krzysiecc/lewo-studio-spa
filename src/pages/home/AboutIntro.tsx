@@ -1,5 +1,9 @@
 // components/home/AboutIntro.tsx
 
+// NOTE: This is the legacy "popping colored tiles" grid. It is no longer
+// rendered on the homepage (HomePage now shows ApartmentWalkthrough); the file
+// is kept intact so the colored layout can be restored if colours return.
+
 // Copyright (c) 2026, Krzysztof Wiłnicki
 // All rights reserved.
 //

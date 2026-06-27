@@ -41,26 +41,16 @@ export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
 
     const allTargets = [logoTarget, buttonTargets];
 
+    // Clean color cross-fade: header goes white over the dark menu, back to its
+    // ink color when closed. No hue-rotate/brightness filter trickery.
     gsap.to(allTargets, {
       color: isMenuOpen ? "#fefefe" : headerColor,
       fill: isMenuOpen ? "#fefefe" : headerColor,
-      duration: 0,
-      ease: "none",
+      duration: ANIMATION_CONSTANTS.HEADER.COLOR_CHANGE_DURATION,
+      ease: "power2.out",
       overwrite: "auto",
     });
-
-    // The "funky" transformation
-    if (isMenuOpen) {
-      gsap.to(allTargets, {
-        filter: "hue-rotate(120deg) brightness(1.5)",
-        duration: ANIMATION_CONSTANTS.HEADER.FUNKY_TRANSFORM_DURATION,
-        ease: "power2.in",
-        yoyo: true,
-        repeat: 1,
-      });
-    } else {
-      gsap.set(allTargets, { filter: "hue-rotate(0deg) brightness(1)" });
-    }
+    gsap.set(allTargets, { filter: "none" });
   }, [isMenuOpen, headerColor]);
 
   const handleButtonClick = () => {

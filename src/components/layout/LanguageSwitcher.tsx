@@ -7,86 +7,54 @@
 // LICENSE file in the root directory of this source tree.
 
 import { useTranslation } from "react-i18next";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useScramble } from "@/hooks/useScramble";
+
+/** Two-letter label for a language code, e.g. "en" -> "EN". */
+const labelFor = (lang: string) => (lang || "en").slice(0, 2).toUpperCase();
 
 export default function LanguageSwitcher() {
   const { t, i18n } = useTranslation();
   const textRef = useRef<HTMLSpanElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { display, scrambleTo } = useScramble(t("langSwitcher"));
 
   const handleMouseEnter = () => {
-    gsap.to(textRef.current, {
-      scale: 1.1,
-      duration: 0.3,
-      ease: "power2.out",
-    });
+    gsap.to(textRef.current, { scale: 1.1, duration: 0.3, ease: "power2.out" });
   };
 
   const handleMouseLeave = () => {
-    gsap.to(textRef.current, {
-      scale: 1.0,
-      duration: 0.3,
-      ease: "power2.out",
-    });
+    gsap.to(textRef.current, { scale: 1.0, duration: 0.3, ease: "power2.out" });
   };
 
   const handleLanguageChange = () => {
-    // Animate out the old text
-    gsap.to(textRef.current, {
-      yPercent: -100,
-      opacity: 0,
-      duration: 0.4,
-      ease: "power2.in",
-      onComplete: () => {
-        // Change language
-        const newLang = i18n.language === "en" ? "pl" : "en";
-        void i18n.changeLanguage(newLang);
-        // Instantly move the text to the bottom, ready to animate in
-        gsap.set(textRef.current, { yPercent: 100 });
-        // Animate in the new text
-        gsap.to(textRef.current, {
-          yPercent: 0,
-          opacity: 1,
-          duration: 0.4,
-          ease: "power2.out",
-        });
-      },
-    });
+    const newLang = i18n.language === "en" ? "pl" : "en";
+    void i18n.changeLanguage(newLang);
   };
 
-  // This effect ensures the text updates if the language changes elsewhere
+  // Decode toward the active language whenever it changes (incl. first mount).
   useEffect(() => {
-    if (textRef.current) {
-      gsap.fromTo(
-        textRef.current,
-        { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
-      );
-    }
-  }, [i18n.language]);
+    scrambleTo(labelFor(i18n.language));
+  }, [i18n.language, scrambleTo]);
 
   return (
     <button
-      ref={buttonRef}
       type="button"
       onClick={handleLanguageChange}
-      onMouseEnter={handleMouseEnter} // Add mouse enter event
-      onMouseLeave={handleMouseLeave} // Add mouse leave event
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="
-        font-urbanist font-light  md:text-3xl
-        h-7 w-4 md:w-12
-        flex items-center justify-center 
-        overflow-hidden 
+        font-urbanist font-light md:text-3xl
+        h-7 w-7 md:w-12
+        flex items-center justify-center
+        overflow-hidden
         cursor-pointer
       "
       aria-label="Change language"
     >
-      <span ref={textRef} className="block">
-        {t("langSwitcher")}
+      <span ref={textRef} className="block tabular-nums">
+        {display}
       </span>
-
-      {/* The extra underline span has been removed */}
     </button>
   );
 }

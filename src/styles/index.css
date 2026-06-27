@@ -307,6 +307,19 @@
   }
 }
 
+/* Filament-bulb twinkle: independent flicker driven by per-bulb delay/duration
+   (see components/effects/FilamentBulbs.tsx). Animates opacity only so the
+   centering transform on each bulb is preserved. */
+@keyframes bulbTwinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 body {
   @apply bg-white text-coffee-900 font-sans;
   overflow: hidden;

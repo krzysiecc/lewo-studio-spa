@@ -13,6 +13,14 @@
     "contact": "Contact"
   },
   "home": {
+    "apartment": {
+      "entrance": "entrance",
+      "living": "living room",
+      "kitchen": "kitchen",
+      "studio": "studio",
+      "bedroom": "bedroom",
+      "exit": "balcony"
+    },
     "aboutIntro": {
       "label": "about",
       "heading": "interiors that feel like you",

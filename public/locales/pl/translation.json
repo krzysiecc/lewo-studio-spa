@@ -13,6 +13,14 @@
     "contact": "Kontakt"
   },
   "home": {
+    "apartment": {
+      "entrance": "przedpokój",
+      "living": "salon",
+      "kitchen": "kuchnia",
+      "studio": "pracownia",
+      "bedroom": "sypialnia",
+      "exit": "balkon"
+    },
     "aboutIntro": {
       "label": "o mnie",
       "heading": "przestrzeń, która naprawdę jest Twoja",

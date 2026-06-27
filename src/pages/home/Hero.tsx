@@ -12,10 +12,6 @@ import { useTranslation, Trans } from "react-i18next";
 
 import AnimatedText from "../../components/effects/AnimatedText";
 import { ANIMATION_CONSTANTS } from "../../constants/animations";
-import MagnetLines from "@/components/MagnetLines";
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-const MagnetLinesAny = MagnetLines as any;
 
 export default function Hero() {
   const bigNameRef = useRef<HTMLHeadingElement>(null);
@@ -108,16 +104,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <MagnetLinesAny
-        rows={1}
-        columns={25}
-        containerWidth="75%"
-        containerHeight="6vmin"
-        lineWidth="0.2vmin"
-        lineHeight="3vmin"
-        baseAngle={0}
-        style={{ margin: "1rem auto" }}
-      />
     </section>
   );
 }
